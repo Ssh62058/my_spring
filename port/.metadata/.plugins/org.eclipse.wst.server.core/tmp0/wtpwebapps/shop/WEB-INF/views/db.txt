@@ -1,0 +1,94 @@
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+create user "PORT_USR" identified by "1234";
+grant connect to "PORT_USR";
+grant resource to "PORT_USR";
+alter user PORT_USR default tablespace users quota unlimited on users;
+
+회원가입 테이블
+create table tbl_member(
+userId varchar2(100)not null primary key,
+userPass varchar2(100)not null,
+userPassRe varchar2(100)not null,
+userName varchar2(100)not null,
+userPhone varchar2(100)not null,
+userEmail varchar2(100)not null,
+userGender varchar2(100)not null,
+userAddr1 varchar2(100)not null,
+userAddr2 varchar2(100)not null,
+userAddr3 varchar2(100)not null,
+regidate date default sysdate,
+verify number default 0
+);
+
+상품
+create table tbl_goods(
+gdsNum number not null primary key,
+gdsName varchar2(100) not null,
+cateCode varchar2(100) not null,
+gdsPrice number not null,
+gdsStock number not null,
+gdsDes varchar2(500) not null,
+gdsImg varchar2(500) not null,
+gdsThumbImg varchar2(500) not null,
+gdsDate date default sysdate
+);
+
+카테고리
+create table goods_category(
+cateName varchar2(100)not null,
+cateCode varchar2(100)not null,
+cateCodeRef varchar2(100) null,
+primary key(cateCode),
+foreign key(cateCodeRef) references goods_category(cateCode)
+다른카테고리를 참조하는 부모자식관계를 형성
+);
+
+
+댓글테이블
+create table tbl_reply(
+gdsNum number not null,
+userId varchar2(50) not null,
+repNum number not null,
+repCon varchar2(2000) not null,
+repDate date default sysdate,
+primary key(gdsNum, repNum)
+);
+create sequence seq_tbl_reply;
+
+alter table tbl_reply
+add constraint tbl_reply_gdsNum foreign key(gdsNum)
+references tbl_goods(gdsNum);
+
+alter table tbl_reply
+add constraint tbl_reply_userId foreign key(userId)
+references tbl_member(userId);
+
+카트담기
+create table tbl_cart(
+cartNum number not null,
+userId varchar2(50) not null,
+gdsNum number not null,
+cartStock number not null,
+addDate date default sysdate,
+primary key(cartNum, userId)
+);
+create sequence seq_tbl_cart;
+
+alter table tbl_cart
+add constraint tbl_cart_userId foreign key(userId)
+references tbl_member(userId);
+
+alter table tbl_cart
+add constraint tbl_cart_gdsNum foreign key(gdsNum)
+references tbl_member(gdsNum);
+
+
+
+
+
+
+
+
+
+
+
