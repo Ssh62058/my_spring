@@ -8,10 +8,10 @@
 <div class="col-md-12">
 <div class="d-flex">
 <div class="w-25">
-<div class="mt-1"></div>
+<div class="mt-5 pt-5"></div>
 <jsp:include page="../include/lnb.jsp"/>
 </div>
-<div class="w-75 p-3">
+<div class="w-75 p-3 mt-5 pt-5">
 <form role="form" method="post" enctype="multipart/form-data">
 <input type="hidden" name="gdsNum" value="${goods.gdsNum}"/>
 

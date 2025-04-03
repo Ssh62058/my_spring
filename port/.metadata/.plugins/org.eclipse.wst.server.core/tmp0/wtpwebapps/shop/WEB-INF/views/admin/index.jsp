@@ -7,10 +7,10 @@
 <div class="col-md-12">
 <div class="d-flex">
 <div class="w-10">
-<div class="mt-1"></div>
+<div class="mt-5 pt-5"></div>
 <jsp:include page="include/lnb.jsp"/>
 </div>
-<div class="w-90">
+<div class="mt-5 pt-5">
 <jsp:include page="include/log.jsp"/>
 </div>
 </div>

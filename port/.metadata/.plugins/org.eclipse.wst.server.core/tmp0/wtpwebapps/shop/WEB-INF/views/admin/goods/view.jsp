@@ -9,10 +9,10 @@
 <div class="col-md-12">
 <div class="d-flex">
 <div class="w-25">
-<div class="mt-1"></div>
+<div class="mt-5 pt-5"></div>
 <jsp:include page="../include/lnb.jsp"/>
 </div>
-<div class="w-75 p-5">
+<div class="w-75 p-5 mt-5 pt-5">
 <h1 class="my-5 text-white">view</h1>
 <form role="form" method="post" autocomplete="off"><!-- jquery나 ajax일때는 method form 적지 말것 -->
 <input type="hidden" name="n" value="${goods.gdsNum}"/>

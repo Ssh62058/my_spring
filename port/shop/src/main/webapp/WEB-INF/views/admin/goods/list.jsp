@@ -10,12 +10,12 @@
 <div class="col-md-12">
 <div class="d-flex">
 <div class="w-25">
-<div class="mt-1"></div>
+<div class="mt-5 pt-5"></div>
 <jsp:include page="../include/lnb.jsp"/>
 </div>
 <div class="w-75 p-3">
 <!-- 내용 -->
-<h2 class="mt-5 mb-3 text-white fw-bold">상품목록</h2>
+<h2 class="mt-5 pt-5 text-white fw-bold">상품목록</h2>
 <div class="my-3">
 <ul class="breadcrumb">
   <li class="breadcrumb-item text-warning"><a href="#" class="text-warning">Photos</a></li>

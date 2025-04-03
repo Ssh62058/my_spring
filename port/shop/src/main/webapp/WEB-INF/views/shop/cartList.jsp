@@ -8,12 +8,12 @@
 
 <div class="container-fluid">
 <div class="row">
-<div class="col-md-3">
+<div class="col-md-3 mt-5 pt-5">
 <jsp:include page="../include/aside.jsp" flush="false" />
 </div>
 <div class="col-md-9">
 
-<section id="container" class="mt-5">
+<section id="container" class="mt-5 pt-5">
 		<div id="container_box">
 		<h1 class="mt-5">CartList</h1>
 			<section id="content">

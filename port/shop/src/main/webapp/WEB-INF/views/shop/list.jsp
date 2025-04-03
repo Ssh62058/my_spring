@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 mt-5 pt-5">
 <jsp:include page="../include/aside.jsp" />		
 		</div>
 		<div class="col-md-9">

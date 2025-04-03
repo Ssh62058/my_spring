@@ -6,10 +6,10 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 mt-5 pt-5">
 <jsp:include page="../include/aside.jsp" />		
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-9 mt-5 pt-5">
 			<c:forEach items="${orderView}" var="orderView" varStatus="status">
 				<c:if test="${status.first}">
 					<pre>
