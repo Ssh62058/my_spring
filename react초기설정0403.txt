@@ -1,0 +1,62 @@
+node js 설치
+npx create-react-app reactbbs --template typescript
+reactbbs -> bbs 파일로 이동 (client로 파일이름 변경 후)
+
+-server-
+1) npm init -y -> node.js 모듈을 설치
+2) mysql을 사용하기 위한 서버
+npm install express body-parser mysql
+3) 서버코드가 수정되었을 때 자동으로 서버를 재 시작해주는 모듈
+npm install nodemon
+4) index.js 생성 후 테스트 실행
+node index.js
+ctrl + shift + ` -> 터미널
+ctrl + c -> 서버 초기화
+5) 패키지 json 열고 
+scripts 부분에 test 지운 후
+"start":"node index.js",
+"dev":"nodemon index.js"
+6) node 문으로 서버구동 연동
+npm run dev
+
+client 
+1) src 하위 폴더에 app.tsx, index.tsx, react-app....ts, reportWeb...ts, setupTests.ts 만 남게 삭제
+2) 부트스트랩 실행
+npm i react-bootstrap bootstrap
+npm install react-bootstrap bootstrap
+3) app.tsx
+위에 쓸모없는 import 두개 제거
+app -> return 안에 코드 지우고
+<>
+<BoardList/>
+</>만 타이핑
+4)BoardList.tsx 생성 후 코드 입력
+import React from 'react';
+// 부트스트랩을 사용하기 위해서 cdn을 부름
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BoardList from './BoardList';
+
+function App() {
+  return (
+    <>
+    <BoardList/>
+    </>
+  );
+}
+
+export default App;
+
+
+mysql 
+유저 권한 부여 ->
+CREATE USER 'root'@'%' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+
+create database react;
+use react;
+create table requested(
+rowno int
+);
+select * from requested;
