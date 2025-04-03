@@ -21,6 +21,7 @@ npm run dev
 
 client 
 1) src 하위 폴더에 app.tsx, index.tsx, react-app....ts, reportWeb...ts, setupTests.ts 만 남게 삭제
+index.tsx들어가서 import index 삭제
 2) 부트스트랩 실행
 npm i react-bootstrap bootstrap
 npm install react-bootstrap bootstrap
