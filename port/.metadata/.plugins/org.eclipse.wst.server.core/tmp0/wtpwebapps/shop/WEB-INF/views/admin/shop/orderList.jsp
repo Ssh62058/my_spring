@@ -4,12 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="../../include/header.jsp" />
 
-<div class="container-fluid mt-5">
+<div class="container-fluid bg-gradient-primary min-vh-100">
 	<div class="row">
-		<div class="col-md-3">
-<jsp:include page="../include/lnb.jsp" />		
-			<div class="col-md-9">
-				<ul class="bg-white list-group">
+		<div class="col-md-3 mt-5 pt-5">
+<jsp:include page="../include/lnb.jsp" />
+</div>		
+			<div class="col-md-9 mt-5 pt-5">
+			<h2 class="text-white fw-bold">주문목록</h2>
+				<ul class="bg-white list-group mt-3">
 					<c:forEach items="${orderList}" var="orderList">
 						<li class="list-group-item">
 							<div>
@@ -28,6 +30,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 <jsp:include page="../../include/footer.jsp" />

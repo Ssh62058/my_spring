@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
-
+	<footer class="bg-dark fixed-bottom text-white">
+		<p class="text-center">Copyright @Son 2025 reserve.</p>
+	</footer>
 </body>
 </html>

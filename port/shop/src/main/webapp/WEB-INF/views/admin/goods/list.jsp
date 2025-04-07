@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="../../include/header.jsp" flush="false"/>
 
-<div class="container-fluid bg-gradient-primary">
+<div class="container-fluid bg-gradient-primary min-vh-100">
 <div class="row">
 <div class="col-md-12">
 <div class="d-flex">
