@@ -7,7 +7,7 @@
 </head>
 <body>
 	<footer class="bg-dark fixed-bottom text-white">
-		<p class="text-center">Copyright @Son 2025 reserve.</p>
+		<p class="text-center">Son © 2025. All rights reserved.</p>
 	</footer>
 </body>
 </html>
