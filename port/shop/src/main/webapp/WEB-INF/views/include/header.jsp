@@ -69,10 +69,10 @@ function replyList(){
 	
 	<c:if test = "${member == null }"><!-- ログインしないと -->
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/member/signin">login</a>
+			<a class="nav-link" href="${contextPath}/member/signin">ログイン</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/member/signup">join</a>
+			<a class="nav-link" href="${contextPath}/member/signup">会員登録</a>
 		</li>
 		<li class="nav-item">
 		<a class="" href="${contextPath }/shop/list?c=101&l=2">

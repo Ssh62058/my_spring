@@ -3,6 +3,6 @@
 <ul class="breadcrumb">
   <li class="breadcrumb-item"><a href="/">Home</a></li>
   <li class="breadcrumb-item"><a href="#" onclick="historyBack()">back</a></li>
-  <li class="breadcrumb-item active">상품페이지</li>
+  <li class="breadcrumb-item active">商品ページ</li>
 </ul>
 <script src="${contextPath}/resources/js/historyBack.js"></script>

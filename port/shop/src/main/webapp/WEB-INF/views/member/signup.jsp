@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 아래 페이지 디렉티브 인클루드 -->
+<!-- 以下のページディレクティブをインクルード -->
 <%@ include file="../include/header.jsp" %>
 <div class="container-fluid bg-gradient-primary2">
 <div class="container">
@@ -9,7 +9,7 @@
 			<div class="card o-hidden border-0 shadow-lg my-5">
 				<div class="card-body p-0">
 					<div class="row">
-<!-- 배경이미지 부트스트랩에 규칙 칸은 도합 12-->
+<!-- 背景画像 ブートストラップに 規則 カンは 合わせて12-->
 <div class="col-lg-5 d-none d-lg-block bg-register-image">
 </div>
 <!-- join -->	
@@ -17,7 +17,7 @@
 	<div class="p-5">
 		<div class="text-center">
 <h1 class="h4 text-gray-900 mb-4">
-회원가입
+会員登録
 </h1>
 <form method="post" class="was-validated">
 <div class="mb-4">
@@ -81,16 +81,16 @@ required="required"
 </div>
 
 <div class="mb-4">
-<label class="form-label">주소</label>
+<label class="form-label">住所</label>
 <div class="d-flex">
 <input
 type="text"
-placeholder="주소를 검색하세요"
+placeholder="住所を検索してください。"
 name="userAddr1"
 readonly="readonly"
 class="form-control form-control-user address_input_1 w-75"
 />
-<a class="btn btn-outline-primary border-radius-top-right-sm w-25" onclick="go_daum_address()">주소찾기</a>
+<a class="btn btn-outline-primary border-radius-top-right-sm w-25" onclick="go_daum_address()">住所検索</a>
 </div>
 </div>
 
@@ -117,10 +117,10 @@ class="form-control form-control-user address_input_3"
 <div class="mb-4">
 	<div class="btn-group">
 		<label class="btn border-0 active">
-			<input type="radio" name="userGender" value="남자" autocomplete="off" checked>남자
+			<input type="radio" name="userGender" value="남자" autocomplete="off" checked>男性
 		</label>
 		<label class="btn border-0">
-			<input type="radio" name="userGender" value="여자" autocomplete="off">여자
+			<input type="radio" name="userGender" value="여자" autocomplete="off">女性
 		</label>
 	</div>
 </div>
@@ -129,14 +129,14 @@ class="form-control form-control-user address_input_3"
 <input
 type="submit"
 class="btn btn-primary btn-user btn-block "
-value="회원가입"
+value="会員登録"
 />
 </div>
 
 <p class="mb-3">
    <a href="https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code" class="btn btn-kakao btn-user btn-block">
-      <i class="fab fa-google fa-fw w-100">
-      코코아톡으로 회원가입
+      <i class="fas fa-comment fa-fw w-100">
+      ココアトークで会員登録
       </i>
    </a>
 </p>

@@ -4,7 +4,7 @@ grant connect to "PORT_USR";
 grant resource to "PORT_USR";
 alter user PORT_USR default tablespace users quota unlimited on users;
 
-회원가입 테이블
+会員登録テーブル
 create table tbl_member(
 userId varchar2(100)not null primary key,
 userPass varchar2(100)not null,
@@ -20,7 +20,7 @@ regidate date default sysdate,
 verify number default 0
 );
 
-상품
+商品
 create table tbl_goods(
 gdsNum number not null primary key,
 gdsName varchar2(100) not null,
@@ -33,7 +33,7 @@ gdsThumbImg varchar2(500) not null,
 gdsDate date default sysdate
 );
 
-카테고리
+カテゴリー
 create table goods_category(
 cateName varchar2(100)not null,
 cateCode varchar2(100)not null,
@@ -44,7 +44,7 @@ foreign key(cateCodeRef) references goods_category(cateCode)
 );
 
 
-댓글테이블
+コメントテーブル
 create table tbl_reply(
 gdsNum number not null,
 userId varchar2(50) not null,
@@ -63,7 +63,7 @@ alter table tbl_reply
 add constraint tbl_reply_userId foreign key(userId)
 references tbl_member(userId);
 
-카트담기
+カートに入れる
 create table tbl_cart(
 cartNum number not null,
 userId varchar2(50) not null,

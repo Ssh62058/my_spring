@@ -44,29 +44,29 @@ public class AdminController {
 	@Inject
 	AdminService adminService;
 	
-	@Resource(name="uploadPath")//업로드 패스 정의
+	@Resource(name="uploadPath")//アップロードパスの定義
 	private String uploadPath;
 	
-	//관리자 메인
+	//管理者メイン
 	@GetMapping("/index")//admin/index
 	public void getIndex() throws Exception{
-		logger.info("관리자 화면 진입");
+		logger.info("管理者画面に入る");
 	}
 	
-	//상품등록
+	//商品登録
 	@GetMapping("/goods/register")
 	public void getGoodsRegister(Model model) throws Exception{
-		logger.info("상품등록 페이지 진입");
+		logger.info("商品登録ページに入る");
 		
-		//처음에 비워져 있어야 함 초기화
-List<CategoryVO> category = null; //CategoryVO형태의 list형 변수 category선언
+		//最初は空にしておく必要があります、初期化
+List<CategoryVO> category = null; //CategoryVO型のリスト変数categoryを宣言する
 category = adminService.category();
-//DB에 저장된 카테고리를 가져와서 category에 저장
+//DBに保存されているカテゴリーを取得して、categoryに保存
 model.addAttribute("category", JSONArray.fromObject(category));
-//변수 카테고리를 제이슨 타입으로 변환하여 카테고리 세션에 부여
+//変数categoryをJSONタイプに変換して、カテゴリーセッションに設定
 	}
 		
-	//상품등록 post
+	//商品登録 post
 	@PostMapping("/goods/register")
 	public String postGoodsRegister(GoodsVO vo, MultipartFile file) throws Exception{
 //멀티파일을 사용할 경우

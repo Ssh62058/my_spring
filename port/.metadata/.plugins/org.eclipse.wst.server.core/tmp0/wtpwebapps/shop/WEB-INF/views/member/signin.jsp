@@ -10,7 +10,7 @@
         <div class="card-body p-0">
             <div class="row min-vh-100">
                 <div class="col-lg-6 d-none d-lg-block bg-login-image">
-<!--배경이미지-->
+<!--背景画像-->
                 </div>
                 <div class="col-lg-6 ">
 <div class="p-5">
@@ -23,7 +23,7 @@
         <input
 type="text"
 class="form-control form-control-user" 
-placeholder="아이디를 입력하세요" 
+placeholder="IDを入力してください。" 
 name="userId"   
 required="required"  
         />
@@ -32,7 +32,7 @@ required="required"
         <input
 type="password"
 class="form-control form-control-user" 
-placeholder="비밀번호를 입력하세요" 
+placeholder="パスワードを入力してください。" 
 name="userPass" 
 required="required"         
         />
@@ -55,7 +55,7 @@ Remeber Me
         <input 
         type="submit"
         class="btn btn-primary btn-user btn-block"
-        value="로그인"
+        value="ログイン"
         id="signin_btn"
         name="signin_btn"
         />

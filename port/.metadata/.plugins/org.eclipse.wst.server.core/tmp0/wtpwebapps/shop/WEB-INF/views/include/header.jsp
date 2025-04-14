@@ -18,22 +18,22 @@
 function replyList(){
 	var gdsNum = ${view.gdsNum};
 
-	//비동기식 데이터 요청
+	//非同期データ要求
 	$.getJSON("/shop/view/replyList" + "?n=" + gdsNum, function(data){
-		var str = "";//초기화
+		var str = "";//初期化
 		$(data).each(function(){
 			console.log(data);
-			//날짜 데이터를 보기 쉽게 변환
+			//日付データを見やすく変換
 			var repDate = new Date(this.repDate);
 			repdate = repDate.toLocaleDateString("ko-KR")
-	//html코드 조립
+	//HTMLコードの組み立て
 	str += "<li data-repNum='" + this.repNum + "'class='list-group-item'>"
 	+ "<div class=''>"
 	+ "<p class=''>" + this.userName + "</p>"
 	+ "<p class='mx-3'>" + repDate + "</p>"
 	+ "</div>"
 	+ "<div class='replyContent'>"+this.repCon+"</div>"
-	+"<c:if test='${member != null}'>"//세션이 있어야만 수정삭제가 가능
+	+"<c:if test='${member != null}'>"//セッションがなければ、編集・削除ができません。
 	+ "<div class='replyFooter my-3'>"
 	+ "<button type='button' class='modify btn btn-outline-secondary' data-repNum='"+this.repNum+"'>M</button>"
 	+ "<button type='button' class='delete btn btn-outline-secondary mx-3' data-repNum='"+this.repNum+"'>D</button>"
@@ -57,32 +57,32 @@ function replyList(){
 <nav class="navbar navbar-expand-sm bg-light  fixed-top">
 <div class="container-fluid">
 <a class="navbar-brand" href="/">Shop</a>
-<!-- 토글버튼  -->
+<!-- トグルボタン  -->
 <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#mynavbar">
 <span class="navbar-toggler-icon"></span>
 </button>
 
-<!-- 로그인 회원가입 변수 로그인 했을때와 하지 않았을때-->
+<!-- ログイン・会員登録の変数、ログインした場合としない場合-->
 <div class="collapse navbar-collapse" id="mynavbar">
 <ul class="navbar-nav me-auto align-items-center">
 
 	
-	<c:if test = "${member == null }"><!-- 로그인을 하지 않으면 -->
+	<c:if test = "${member == null }"><!-- ログインしないと -->
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/member/signin">login</a>
+			<a class="nav-link" href="${contextPath}/member/signin">ログイン</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/member/signup">join</a>
+			<a class="nav-link" href="${contextPath}/member/signup">会員登録</a>
 		</li>
 		<li class="nav-item">
 		<a class="" href="${contextPath }/shop/list?c=101&l=2">
-		상품보러가기
+		商品を見る
 		</a> 
 		</li>
 
  
 	</c:if>
-	<!-- 로그인을 했을때 -->
+	<!--ログインした時 -->
 	<c:if test="${member != null }">
 
     <!-- Nav Item - User Information -->
@@ -116,23 +116,23 @@ function replyList(){
 
     <li class="nav-item">
         <span class="fw-bold">
-        ${member.userName}&nbsp;님 환영합니다
+       	ようこそ、${member.userName}&nbsp;さん
         </span>
     </li>
     
         <div class="topbar-divider d-none d-sm-block"></div>
      
 		<li class="nav-item">
-<a class="nav-link fw-bold" href="${contextPath}/shop/list?c=1&l=2">쇼핑몰 상품보러가기</a>
+<a class="nav-link fw-bold" href="${contextPath}/shop/list?c=1&l=2">商品を見る</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/shop/cartList">카트리스트</a>
+			<a class="nav-link" href="${contextPath}/shop/cartList">カート一覧</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/shop/orderList">주문리스트</a>
+			<a class="nav-link" href="${contextPath}/shop/orderList">注文リスト</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="${contextPath}/member/signout">logout</a>
+			<a class="nav-link" href="${contextPath}/member/signout">ログアウト</a>
 		</li>
 
            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -264,9 +264,9 @@ function replyList(){
             </div>
         </li>
 
-        		<!-- 로그인을 했는데 관리자라면 -->
+        		<!-- ログインしたが、管理者の場合は -->
 		<c:if test="${member.verify == 9 }">
-			<a class="nav-link mx-3" href="${contextPath}/admin/index">ADMIN으로 가기</a>
+			<a class="nav-link mx-3" href="${contextPath}/admin/index">ADMIN</a>
 		</c:if>
 	</c:if>
 
