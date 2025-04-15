@@ -69,88 +69,85 @@ model.addAttribute("category", JSONArray.fromObject(category));
 	//商品登録 post
 	@PostMapping("/goods/register")
 	public String postGoodsRegister(GoodsVO vo, MultipartFile file) throws Exception{
-//멀티파일을 사용할 경우
-//이미지를 업로드할 폴더를 설정 = 
+//複数ファイルを使用する場合
+//画像をアップロードするフォルダを設定 =
 String imgUploadPath = uploadPath + File.separator + "imgUpload";
-String ymdPath = UploadFileUtils.calcPath(imgUploadPath);//위의 폴더를 기준으로 연원일 폴더를 생성
+String ymdPath = UploadFileUtils.calcPath(imgUploadPath);//上記のフォルダを基準にして年月日フォルダを作成
 String fileName = null;
 
-//첨부파일이 없이 올리는 것도 고려를 해야합니다
+//添付ファイルがない場合も考慮する必要があります
 if(file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
 	fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-	//원본파일경로 + 파일명 저장
+	//元ファイルパス + ファイル名を保存
 	vo.setGdsImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-	//썸네일
-vo.setGdsThumbImg(File.separator + "imgUpload" + ymdPath + File.separator +"s"+File.separator+"s_" +fileName);	
-}else {//첨부된 파일이 없으면 
-//미리 업로드 시켜놓은 none.png파일을 대신 출력
+	//サムネイル
+	vo.setGdsThumbImg(File.separator + "imgUpload" + ymdPath + File.separator +"s"+File.separator+"s_" +fileName);	
+}else { //添付ファイルがない場合 
+//事前にアップロードしておいた none.png ファイルを代わりに表示
 	fileName = File.separator + "images" + File.separator + "none.png";
 	vo.setGdsImg(fileName);
 	vo.setGdsThumbImg(fileName);
 }
 
-
-		adminService.register(vo);
-		
-		return "redirect:/admin/index";
-	}
+	adminService.register(vo);
+	return "redirect:/admin/index";
+}
 	
-	//상품 목록
-	@GetMapping(value="/goods/list")
-	public void getGoodsList(Model model) throws Exception{
-logger.info("상품 리스트 출력");
-List<GoodsViewVO>list = adminService.goodslist();// GoodsVO형태의 List형 변수 list 선언
-model.addAttribute("list",list);
-	}
+//商品リスト
+@GetMapping(value="/goods/list")
+public void getGoodsList(Model model) throws Exception{
+	logger.info("商品リストを表示");
+	List<GoodsViewVO> list = adminService.goodslist(); // GoodsVO型の List 型変数 list を宣言
+	model.addAttribute("list", list);
+}
 	
-//상품조회 1)리스트에서 리스트 글들중에 제목을 선택하는데 그제목에 해당글에 순번이 랩핑 2)랩핑된걸로 요청 3)순번에 맞는 read page 보여줌
-	@GetMapping(value="/goods/view")
-	public void getGoodsview(@RequestParam("n") int gdsNum, Model model)throws Exception{
-logger.info("상세페이지");
-//리턴시킬 변수 정의
-GoodsViewVO goods = adminService.goodsView(gdsNum);
-model.addAttribute("goods", goods);
-
-	}
+//商品詳細 1)リストでタイトルを選択 2)該当タイトルの番号を利用して 3)詳細ページを表示
+@GetMapping(value="/goods/view")
+public void getGoodsview(@RequestParam("n") int gdsNum, Model model)throws Exception{
+	logger.info("詳細ページ");
+//返却する変数を定義
+	GoodsViewVO goods = adminService.goodsView(gdsNum);
+	model.addAttribute("goods", goods);
+}
 	
-//ck에디터에서 파일 업로드
+//CKEditorでファイルをアップロード
 @PostMapping(value="/goods/ckUpload")
 public void postCKEditorImgUpload(HttpServletRequest req, HttpServletResponse res, @RequestParam MultipartFile upload)throws Exception{
-	logger.info("우리가 개발했지만 ck에디터에 첨부파일에 등록을 하고싶다면 이메소드를 사용하세요");
-	//랜덤문자 생성
+	logger.info("CKEditorに添付ファイルとして登録したい場合、このメソッドを使用してください");
+	//ランダム文字生成
 	UUID uid = UUID.randomUUID();
 	
 	OutputStream out = null;
-	PrintWriter printWriter = null;//태그나 스크립트를 자바구문에서 사용할때
-	
-	//태그를 작성하고 한글이 나올때는 한글깨짐을 방지하기 위해서 아래를 사용
+	PrintWriter printWriter = null; //タグやスクリプトをJavaで使う場合
+
+	//タグで日本語が表示されるよう文字化け防止
 	res.setCharacterEncoding("utf-8");
 	res.setContentType("text/html; charset=utf-8");
 	
 	try {
-String fileName = upload.getOriginalFilename(); //파일 이름 가져오기
-byte[] bytes = upload.getBytes();
-//업로드 경로
-String ckUploadPath = uploadPath + File.separator + "ckUpload" + File.separator + uid + "_" + fileName;
-out = new FileOutputStream(new File(ckUploadPath));
-out.write(bytes);
-out.flush();//out에 저장된 데이터를 전송하고 초기화
+		String fileName = upload.getOriginalFilename(); //ファイル名取得
+		byte[] bytes = upload.getBytes();
+		//アップロードパス
+		String ckUploadPath = uploadPath + File.separator + "ckUpload" + File.separator + uid + "_" + fileName;
+		out = new FileOutputStream(new File(ckUploadPath));
+		out.write(bytes);
+		out.flush(); //outのデータを送信して初期化
 
-String callback = req.getParameter("CKEditorFuncNum");
-printWriter = res.getWriter();
-String fileUrl = "/ckUpload/" + uid + "_" +fileName;//작성 화면
-//업로드시 메세지 출력
-printWriter.println("<script> "
-+ "window.parent.CKEDITOR.tools.callFunction("
-+ callback +",'"+ fileUrl +"','이미지를 업로드 하였습니다')"
-+ "</script>");
-printWriter.flush();
+		String callback = req.getParameter("CKEditorFuncNum");
+		printWriter = res.getWriter();
+		String fileUrl = "/ckUpload/" + uid + "_" +fileName; //作成画面
+		//アップロード時メッセージを表示
+		printWriter.println("<script> "
+		+ "window.parent.CKEDITOR.tools.callFunction("
+		+ callback +",'"+ fileUrl +"','画像をアップロードしました')"
+		+ "</script>");
+		printWriter.flush();
 	}catch(IOException e) {
 		e.printStackTrace();
 	}finally {
 		try {
-if(out != null) {out.close();}
-if(printWriter != null) {printWriter.close();}
+			if(out != null) { out.close(); }
+			if(printWriter != null) { printWriter.close(); }
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -158,83 +155,80 @@ if(printWriter != null) {printWriter.close();}
 	return;	
 }
 
-
-//상품수정 1)수정할 글을 불러온다 2)그 순번에 맞는 글을 수정한다
+//商品修正 1)修正対象の商品を読み込み 2)該当番号の商品を修正
 @GetMapping(value="/goods/modify")
 public void getGoodsModify(@RequestParam("n") int gdsNum, Model model) throws Exception{
-//@RequestParam("n")으로 인해, URL주소에 있는 n의 값을 가져와 gdsNum에 저장
-	logger.info("수정페이지 진입");
-	//GoodsViewVO변수에 goods상품정보를 저장
+//@RequestParam("n") で URL の n の値を取得して gdsNum に格納
+	logger.info("修正ページに入る");
+	//商品情報を取得
 	GoodsViewVO goods = adminService.goodsView(gdsNum);
-	model.addAttribute("goods",goods);
-	//카테고리 내용을 가져와야 함
+	model.addAttribute("goods", goods);
+	//カテゴリ内容を取得
 	List<CategoryVO> category = null;
 	category = adminService.category();
 	model.addAttribute("category", JSONArray.fromObject(category));
 	
-	//add
+	//追加
 	List<CategoryVO> categoryVO = adminService.category();
 	model.addAttribute("categoryVO", categoryVO);
-	
 }
 
-//실제적으로 상품 내용을 수정 변수 상품을 수정하는데 기존이미지를 수정할수도 있고 그대로 사용할수도 있음
+//実際に商品内容を修正（既存画像を修正するかそのまま使うか）
 @PostMapping(value="/goods/modify")
 public String postGoodsModify(GoodsVO vo, MultipartFile file, HttpServletRequest req) throws Exception{
-	logger.info("상품 수정");
-	//새로운 파일이 등록되었는지 확인
+	logger.info("商品修正");
+	//新しいファイルが登録されたか確認
 	if(file.getOriginalFilename() != null && file.getOriginalFilename() != "") {
-		//1)기존 파일을 삭제 (이미지와 썸이미지를 둘다삭제)
+		//1)既存ファイル削除（画像とサムネイル両方）
 		new File(uploadPath + req.getParameter("gdsImg")).delete();
 		new File(uploadPath + req.getParameter("gdsThumbImg")).delete();
-		//2)새로 첨부한 파일을 등록
+		//2)新しいファイルをアップロード
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-vo.setGdsImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-//2025\02\17\666cccc-nnnn-.jpg
-vo.setGdsThumbImg(File.separator+ "imgUpload" + ymdPath + File.separator+ "s"+File.separator +"s_"+ fileName);
-//2025\02\17\s\s_666cccc-nnnn-.jpg
-	}else {//새로운 파일이 등록되지 않았다면 기존 이미지를 그대로 사용
-vo.setGdsImg(req.getParameter("gdsImg"));
-vo.setGdsThumbImg(req.getParameter("gdsThumbImg"));
+		vo.setGdsImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+		vo.setGdsThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
+	}else { //新しいファイルが登録されていない場合、既存の画像をそのまま使用
+		vo.setGdsImg(req.getParameter("gdsImg"));
+		vo.setGdsThumbImg(req.getParameter("gdsThumbImg"));
 	}
 	adminService.goodsModify(vo);
 	return "redirect:/admin/index";
 }
 
-//상품삭제
+//商品削除
 @PostMapping(value="/goods/delete")
 public String postGoodsDelete(@RequestParam("n") int gdsNum) throws Exception{
-	logger.info("상품삭제");
+	logger.info("商品削除");
 	adminService.goodsDelete(gdsNum);
 	return "redirect:/admin/index";
 }
-//주문 목록 : 상태 변경은 어드민에서, 주문 목록이 
-@GetMapping(value="/shop/orderList") // 스프링 4.0이상일 때 get과 post 매핑 사용가능
-// @RequestMapping("")
+
+//注文リスト：ステータス変更は管理者、注文リスト表示
+@GetMapping(value="/shop/orderList")
 public void getOrderList(Model model) throws Exception{
-	logger.info("관리자가 확인하는 이 사이트의 모든 소비자 주문목록 진입");
+	logger.info("管理者が確認するこのサイトのすべての顧客注文リスト");
 	List<OrderVO> orderList = adminService.orderList();
-	model.addAttribute("orderList",orderList);
+	model.addAttribute("orderList", orderList);
 }
-//주문 상세 목록
+
+//注文詳細リスト
 @GetMapping(value="/shop/orderView")
 public void getOrderList(@RequestParam("n") String orderId, Model model, OrderVO order) throws Exception{
-	logger.info("소비자 주문의 sang say 페이지");
+	logger.info("顧客注文の詳細ページ");
 	order.setOrderId(orderId);
 	List<OrderListVO> orderView = adminService.orderView(order); 
-	
-	model.addAttribute("orderView",orderView);
+	model.addAttribute("orderView", orderView);
 }
-//주문 상세 몰록 - 상태 변경
+
+//注文詳細 - ステータス変更
 @PostMapping(value="/shop/orderView")
 public String delivery(OrderVO order) throws Exception{
-	logger.info("배송 상태 설정창 진입");
+	logger.info("配送ステータス設定ページに入る");
 	adminService.delivery(order);
-	// 기존 서비스 사용
+	//既存サービス使用
 	List<OrderListVO> orderView = adminService.orderView(order);
-	// 콘스트럭터 생성자 사용
+	//コンストラクタ利用
 	GoodsVO goods = new GoodsVO();
 	for(OrderListVO i : orderView) {
 		goods.setGdsNum(i.getGdsNum());
@@ -243,22 +237,22 @@ public String delivery(OrderVO order) throws Exception{
 	}
 	return "redirect:/admin/shop/orderView?n="+order.getOrderId();
 }
-//모든 소감( 댓글 )
+
+//すべてのレビュー（コメント）
 @GetMapping(value="/shop/allReply")
 public void getAllReply(Model model) throws Exception{
-	logger.info("소비자가 쓴 모든 댓글");
+	logger.info("顧客が書いたすべてのコメント");
 	List<ReplyListVO> reply = adminService.allReply();
-	model.addAttribute("reply",reply);
+	model.addAttribute("reply", reply);
 }
 
-//모든 소감 삭제	
+//すべてのレビュー削除
 @PostMapping(value="/shop/allReply")
 public String PostAllReply(ReplyVO reply) throws Exception{
-	logger.info("소비자가 쓴 모든 댓글 삭제");
+	logger.info("顧客が書いたすべてのコメントを削除");
 	adminService.deleteReply(reply.getRepNum());
 	return "redirect:/admin/shop/allReply";
 }
-
 
 
 }

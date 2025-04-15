@@ -87,7 +87,7 @@ inner join tbl_order_details d
 on o.orderId = d.orderId
 inner join tbl_goods g
 on d.gdsNum = g.gdsNum
-where orderId = #{orderId}
+where o.orderId = #{orderId}
 ]]>
 </select>
 <update id="delivery">

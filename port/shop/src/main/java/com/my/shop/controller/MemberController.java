@@ -23,9 +23,9 @@ import com.my.shop.vo.MemberVO;
 public class MemberController {
 	
 	@Inject
-	MemberService service;//실제 비즈니스로직이 흐르는 서비스를 불러옴
+	MemberService service; // 実際のビジネスロジックを処理するサービスを呼び出す
 	
-	//보안을 위해 관리자도 모르게 패스워드 인코더
+	// セキュリティのため、管理者にも分からないようにパスワードエンコーダーを使用
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 	
@@ -33,21 +33,20 @@ public class MemberController {
 	BCryptPasswordEncoder passEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
 
-	//개발자 입장에서 페이지를 진입할때 터미널에서 작성해논 메세지가 보임
+	// 開発者視点でページにアクセスした際、ターミナルにメッセージが表示される
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	@GetMapping("/signup")// member/signup
+	@GetMapping("/signup") // member/signup
 	public void getSignup() throws Exception{
-		logger.info("사인업 진입");
+		logger.info("サインアップ画面へ");
 	}
+	
 	@PostMapping("/signup")
-	public String postSignup(MemberVO vo)throws Exception{
-		logger.info("회원가입 기능");
+	public String postSignup(MemberVO vo) throws Exception {
+		logger.info("会員登録機能");
 		
-		//암호 암호화
+		// パスワードを暗号化
 		String inputPass = vo.getUserPass();
 		String pass = passEncoder.encode(inputPass);
 		vo.setUserPass(pass);
@@ -55,59 +54,56 @@ public class MemberController {
 		String inputPass2 = vo.getUserPassRe();
 		String pass2 = passEncoder.encode(inputPass2);
 		vo.setUserPassRe(pass2);
-				
+		
 		service.signup(vo);
 		return "redirect:/";
 	}
 	
-	@GetMapping("/signin")// member/signup
-	public void getSignin() throws Exception{
-		logger.info("로그인 진입");
+	@GetMapping("/signin") // member/signin
+	public void getSignin() throws Exception {
+		logger.info("ログイン画面へ");
 	}
-	//로그인 post
+	
+	// ログイン処理 (POST)
 	@PostMapping("/signin")
-	public String postSignin(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr)throws Exception{
-		logger.info("post signin");
+	public String postSignin(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		logger.info("ポスト サインイン");
 		System.out.println("vo : " + vo);
 		
-		MemberVO login = service.signin(vo);//로그인 처리를 위한 서비스 호출
-		//signin(vo)는 사용자 입력값에 맞는 회원 정보를 데이터베이스에서 가져 오는 역활을 합니다
+		MemberVO login = service.signin(vo); // ログイン処理のためのサービス呼び出し
+		// signin(vo) はユーザー入力に一致する会員情報をDBから取得する役割をする
 		HttpSession session = req.getSession();
-//HttpSession 객체를 통해 현재  HTTP세션(사용자마다 고유한 상태정보)을 가져옵니다
-//로그인된 사용자 정보를 세션에 저장하기 위해 사용됩니다.
-boolean passMatch = passEncoder.matches(vo.getUserPass(), login.getUserPass());
-//DB의 비밀번호와 입력된 비밀번호를 비교
-System.out.println("login : " + login);
-if(login != null && passMatch) {//아이디가 존재하고(!= null) 비밀번호가 맞으면(PassMatch = true)
-	//맴버세션에 로그인 정보를 부여
-	session.setAttribute("member", login);	
-}else {//아이디가 존재하지 않고 비밀번호가 틀리면
-	session.setAttribute("member", null);
-	rttr.addFlashAttribute("msg", false);//rttr는 리디렉션시에 1회성 데이터를 전달
-	//msg라는 속성에 false를 전달
-	return "redirect:/member/signin";//로그인 화면으로
-}
-return "redirect:/";//로그인 성공시
-/*
-postSignin메소드가 호출되면 로그인정보(MemberVO vo), Http요청(HttpServletRequest req) 리디렉션후 추가속성(RedirectAttributes rttr)
-을 파라미터로 받습니다 throws Exception는 예외처리를 메소드 외부로 위임한다는 뜻
-*/		
+		// HttpSessionオブジェクトで現在のHTTPセッション（ユーザーごとの状態情報）を取得
+		// ログインされたユーザー情報をセッションに保存するために使用
+
+		boolean passMatch = passEncoder.matches(vo.getUserPass(), login.getUserPass());
+		// DBのパスワードと入力されたパスワードを比較
+		System.out.println("login : " + login);
+		
+		if (login != null && passMatch) { // ユーザーIDが存在し、パスワードも一致する場合
+			// メンバーセッションにログイン情報をセット
+			session.setAttribute("member", login);	
+		} else { // ユーザーIDが存在せず、パスワードが間違っている場合
+			session.setAttribute("member", null);
+			rttr.addFlashAttribute("msg", false); // rttr はリダイレクト時に1回限りのデータを渡すために使用
+			// "msg"属性にfalseを渡す
+			return "redirect:/member/signin"; // ログイン画面へリダイレクト
+		}
+		return "redirect:/"; // ログイン成功時トップへリダイレクト
+		
+		/*
+			postSigninメソッドが呼ばれると、ログイン情報(MemberVO vo)、HTTPリクエスト(HttpServletRequest req)、リダイレクト属性(RedirectAttributes rttr)
+			をパラメータとして受け取ります。throws Exception は例外を外部に投げる意味です。
+		*/
 	}
-	//사용자가 아이디와 패스워드를 입력했을때 하나라도 틀리면 로그인을 방지하고 둘다 맞아야지 로그인
 	
-	//로그아웃
+	// ユーザーがIDやパスワードを入力する際、どちらかでも間違っていればログインを防止、両方正しい場合のみログイン
+	
+	// ログアウト処理
 	@GetMapping("/signout")
-	public String signout(HttpSession session) throws Exception{
-		logger.info("logout");
+	public String signout(HttpSession session) throws Exception {
+		logger.info("ログアウト");
 		service.signout(session);
 		return "redirect:/";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
