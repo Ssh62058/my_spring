@@ -13,30 +13,49 @@
 			<c:forEach items="${orderView}" var="orderView" varStatus="status">
 				<c:if test="${status.first}">
 					<pre>
-						<span class="fw-bold">주문자</span>${orderView.userId}
-						<span class="fw-bold">수령 동지</span>${orderView.orderRec}
-						<span class="fw-bold">주소</span>(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}
-						<span class="fw-bold">가격</span><fmt:formatNumber pattern="###,###,###" value="${orderView.userId}"/>
-						<span class="fw-bold">상태</span>${orderView.userId}
+	<span class="fw-bold">주문자</span>	${orderView.userId}
+	<span class="fw-bold">수령인</span>	${orderView.orderRec}
+	<span class="fw-bold">주소지</span>	(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}
+	<span class="fw-bold">가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/>
+	<span class="fw-bold">상태</span> 	${orderView.delivery}
 					</pre>
 				</c:if>
 			</c:forEach>	
 			<ul class="orderView list-group mt-3">
-			<c:forEach items="#{orderView}" var="orderVIew">
+			<table class="table table-dark table-hover">
+			<colgroup>
+			<col width="20%"/>
+			<col width="80%"/>
+			</colgroup>
+			<thead class="text-center">
+			<tr>
+			<th>IMAGE</th><th>CONTENTS</th>
+			</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${orderView}" var="orderView">
+			<tr>
+			<td>
 			<li class="list-group-item">
 			<div class="">
 			<img src="${orderView.gdsThumbImg}" class="img-thumbnail"/>
 			</div>
+			</td>
+			<td>
 			<div>
 			<pre>
-			<span class="fw-bold">상품 명</span>${orderView.gdsName}
-			<span class="fw-bold">개당 가격</span><fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> WON
-			<span class="fw-bold">구입 수량</span>${orderView.cartStock} 개
-			<span class="fw-bold">최종 가격</span><fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> WON
+			<span class="fw-bold">상품 명</span>  		${orderView.gdsName}
+			<span class="fw-bold">개당 가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> WON
+			<span class="fw-bold">구입 수량</span> 	${orderView.cartStock} 개
+			<span class="fw-bold">최종 가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> WON
 			</pre>
 			</div>
 			</li>
+			</td>
+			</tr>
 			</c:forEach>
+			</tbody>
+			</table>
 			</ul>
 		</div>
 	</div>

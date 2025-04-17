@@ -144,14 +144,14 @@ where userId = #{userId}
 <select id="orderView" resultType="com.my.shop.vo.OrderListVO">
 <![CDATA[
 select
-o.orderId, o.userId, o.orderRec, o.userAddr1, o.userAddr2, o.userAddr3, o.orderPhone, o.amount, o.orderDate,
-g.gdsName, g.gdsThumbImg, g.gdsPrice
+o.userId ,o.orderId, o.userId, o.orderRec, o.userAddr1, o.userAddr2, o.userAddr3, o.orderPhone, o.amount, o.orderDate,
+g.gdsName, g.gdsThumbImg, g.gdsPrice, d.cartStock
 from tbl_order o
 inner join tbl_order_details d
 on o.orderId = d.orderId
 inner join tbl_goods g
 on d.gdsNum = g.gdsNum
-where o.userId = #{userId} and o.orderId=#{orderId}
+where o.userId = #{userId} and o.orderId = #{orderId}
 ]]>
  </select>
 <delete id="cartAllDelete">

@@ -16,12 +16,12 @@
 						<li class="list-group-item">
 							<div>
 								<pre>
-									<span class="fw-bold">주문 번호</span><a href="/admin/shop/orderView?n=${orderList.orderId}">${orderList.orderId}</a>	
-									<span class="fw-bold">주문자</span>${orderList.userId}	
-									<span class="fw-bold">수령동지</span>${orderList.orderRec}	
-									<span class="fw-bold">주소</span>	(${orderList.userAddr1}) ${orderList.userAddr1} ${orderList.userAddr1}
-									<span class="fw-bold">가격</span>	<fmt:formatNumber pattern="###,###,###" value="${orderList.amount}"/>
-									<span class="fw-bold">상태</span>	${orderList.delivery}
+									<span class="fw-bold">주문 번호</span>		<a href="/admin/shop/orderView?n=${orderList.orderId}">${orderList.orderId}</a>	
+									<span class="fw-bold">주문자</span>		${orderList.userId}	
+									<span class="fw-bold">수령동지</span>		${orderList.orderRec}	
+									<span class="fw-bold">주소</span>			(${orderList.userAddr1}) ${orderList.userAddr1} ${orderList.userAddr1}
+									<span class="fw-bold">가격</span>			<fmt:formatNumber pattern="###,###,###" value="${orderList.amount}"/>
+									<span class="fw-bold">상태</span>			${orderList.delivery}
 								</pre>
 							</div>
 						</li>
