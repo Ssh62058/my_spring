@@ -4,21 +4,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="../../include/header.jsp" />
 
-<div class="container-fluid mt-5">
+<div class="container-fluid bg-gradient-primary min-vh-100 mt-5">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 pt-5">
 			<jsp:include page="../include/lnb.jsp" />		
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-9 pt-5">
+		<h2 class="text-white fw-bold">댓글목록</h2>
 			<ul class="list-group bg-white">
 				<c:forEach items="${reply}" var="reply">
 					<li class="replyInfo list-group-item">
 						<pre>
-							<span class="fw-bold">작성자</span>${reply.userName}(${reply.userId})
-							<span class="fw-bold">댓글 단 제품</span><a href="/shop/view?n=${reply.gdsNum}">바로가기</a>
-							<div class="replyContent">
+							<span class="fw-bold">작성자</span>		${reply.userName}(${reply.userId})	
+							<span class="fw-bold">댓글 단 제품</span>	<a href="/shop/view?n=${reply.gdsNum}">바로가기</a>
+							<span class="fw-bold">내용</span>
 							${reply.repCon}
-							</div>
 						</pre>
 						<form role="form" method="post" class="">
 							<input type="hidden" name="repNum" value="${reply.repNum}"/>

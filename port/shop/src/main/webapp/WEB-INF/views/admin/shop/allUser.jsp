@@ -4,33 +4,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="../../include/header.jsp" />
 
-<div class="container-fluid mt-5">
+<div class="container-fluid bg-gradient-primary min-vh-100 mt-5">
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-3 pt-5">
 <jsp:include page="../include/lnb.jsp" />		
 		</div>
-		<div class="col-md-9">
-			<h1>회원 목록</h1>
+		<div class="col-md-9 pt-5">
+			<h2 class="text-white fw-bold">회원목록</h2>
 			<table class="table table-hover">
 				<colgroup>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
-					<col style="width:8.33%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
+					<col style="width:11.11%"/>
 				</colgroup>
 				<thead>
 					<tr>
 					<th>유 저 아 이 디</th>
-					<th>패 스 워 드</th>
-					<th>패 스 워 드 확 인</th>
 					<th>이 름</th>
 					<th>유 저 이 메 일</th>
 					<th>전 화 번 호</th>
@@ -42,20 +38,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="" var="">
+					<c:forEach items="${memberList}" var="memberList">
 					<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td>${memberList.userId }</td>
+					<td>${memberList.userName }</td>
+					<td>${memberList.userEmail }</td>
+					<td>${memberList.userPhone }</td>
+					<td>${memberList.userAddr1 }</td>
+					<td>${memberList.userAddr2 }</td>
+					<td>${memberList.userAddr3 }</td>
+					<td>${memberList.regiDate }</td>
+					<td>${memberList.verify }</td>
 					</tr>
 					</c:forEach>
 				</tbody>

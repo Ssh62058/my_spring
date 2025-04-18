@@ -4,11 +4,14 @@
 
 <jsp:include page="../include/header.jsp" />
 
-<div class="container-fluid">
+<div class="container-fluid min-vh-100">
 	<div class="row">
-		<div class="col-md-3 mt-5 pt-5">
+		<div class="col-md-2 mt-5 pt-5">
 <jsp:include page="../include/aside.jsp" />		
 		</div>
+		<div class="col-md-1 d-flex">
+		<div class="vr"></div>
+	    </div>
 		<div class="col-md-9">
 <div class="mt-5 pt-5">
 <jsp:include page="../include/breadcrumbs.jsp"/>
@@ -19,7 +22,7 @@
 	<div class="">
 	<img src="${list.gdsThumbImg}" class="img-thumbnail"/>
 	</div>
-	<div class="">
+	<div class="text-center">
 	<a href="/shop/view?n=${list.gdsNum}" class="">
 	${list.gdsName}
 	</a>

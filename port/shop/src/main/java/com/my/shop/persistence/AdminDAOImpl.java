@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.my.shop.vo.CategoryVO;
 import com.my.shop.vo.GoodsVO;
 import com.my.shop.vo.GoodsViewVO;
+import com.my.shop.vo.MemberVO;
 import com.my.shop.vo.OrderListVO;
 import com.my.shop.vo.OrderVO;
 import com.my.shop.vo.ReplyListVO;
@@ -91,6 +92,12 @@ public class AdminDAOImpl implements AdminDAO {
 	public void deleteReply(int repNum) throws Exception {
 		// TODO Auto-generated method stub
 		sql.delete(namespace+".deleteReply",repNum);
+	}
+
+	@Override
+	public List<MemberVO> memberList() throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectList(namespace+".memberList");
 	}
 
 }

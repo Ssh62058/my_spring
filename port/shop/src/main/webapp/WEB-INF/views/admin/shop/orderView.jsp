@@ -30,6 +30,8 @@
 							</form>
 							</c:if>
 							</c:forEach>
+							<h2>주문 상세</h2>	
+							<hr color="black" style="width:120px; border: 1px solid;"/>
 							<ul class="orderView bg-white list-group">
 							<table class="table table-dark table-hover">
 							<colgroup>

@@ -31,7 +31,7 @@
 </li>
 
 <li class="list-group-item">
-	<a href="${contextPath}/admin/shop/allReply" class="a-link text-decoration-none">
+	<a href="${contextPath}/admin/shop/allUser" class="a-link text-decoration-none">
 	유저목록
 	</a>
 </li>

@@ -4,11 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="../include/header.jsp" />
 
-<div class="container-fluid">
+<div class="container-fluid min-vh-100">
 	<div class="row">
-		<div class="col-md-3 mt-5 pt-5">
+		<div class="col-md-2 mt-5 pt-5">
 <jsp:include page="../include/aside.jsp" />		
 		</div>
+		<div class="col-md-1 d-flex">
+		<div class="vr"></div>
+	    </div>
 		<div class="col-md-9">
 <h1 class="my-5">장바구니</h1>		
 <ul class="list-group list-group-flush">

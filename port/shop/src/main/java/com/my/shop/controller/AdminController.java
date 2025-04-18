@@ -28,6 +28,7 @@ import com.my.shop.utils.UploadFileUtils;
 import com.my.shop.vo.CategoryVO;
 import com.my.shop.vo.GoodsVO;
 import com.my.shop.vo.GoodsViewVO;
+import com.my.shop.vo.MemberVO;
 import com.my.shop.vo.OrderListVO;
 import com.my.shop.vo.OrderVO;
 import com.my.shop.vo.ReplyListVO;
@@ -254,5 +255,10 @@ public String PostAllReply(ReplyVO reply) throws Exception{
 	return "redirect:/admin/shop/allReply";
 }
 
-
+@GetMapping(value="/shop/allUser")
+public void getUserList(Model model) throws Exception{
+	logger.info("유저 테이블");
+	List<MemberVO> memberVO = adminService.memberList();
+	model.addAttribute("memberList", memberVO);
+}
 }

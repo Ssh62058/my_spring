@@ -6,11 +6,14 @@
 
 
 
-<div class="container-fluid">
+<div class="container-fluid min-vh-100">
 <div class="row">
-<div class="col-md-3 mt-5 pt-5">
-<jsp:include page="../include/aside.jsp" flush="false" />
-</div>
+<div class="col-md-2 mt-5 pt-5">
+<jsp:include page="../include/aside.jsp" />		
+		</div>
+		<div class="col-md-1 d-flex">
+		<div class="vr"></div>
+	    </div>
 <div class="col-md-9">
 
 <section id="container" class="mt-5 pt-5">

@@ -119,6 +119,13 @@ on r.userId = m.userId
 delete tbl_reply where repNum = #{repNum}
 ]]>
 </delete>
+<select id="memberList" resultType="com.my.shop.vo.MemberVO">
+<![CDATA[
+select userId, userPass, userPassRe, userName, userPhone, userEmail, userGender, userAddr1, userAddr2, userAddr3, verify, regiDate
+from
+tbl_member
+]]>
+</select>
 <!-- 
 Join : 두개 이상의 테이블에서 관련 열을 기준으로 행을 결합할때 사용
 내부 조인[INNER JOIN] : 두 테이블에서 일치하는 값을 갖는 레코드를 선택
