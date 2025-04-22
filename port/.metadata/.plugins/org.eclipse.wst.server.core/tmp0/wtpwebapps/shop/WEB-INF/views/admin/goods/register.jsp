@@ -11,76 +11,75 @@
 <jsp:include page="../include/lnb.jsp"/>
 </div>
 <div class="w-75 p-4 mt-5 pt-5 ">
-<h2 class="text-white fw-bold">상품등록</h2>
-<form method="post" enctype="multipart/form-data"><!-- 이미지나 다른 파일을 등록할때  -->
+<h2 class="text-white fw-bold">商品登録</h2>
+<form method="post" enctype="multipart/form-data"><!-- イメージや他のファイルを登録する際に使用 --> 
 <div class="input-group">
-<label class="form-label text-white">1차 분류</label>
+<label class="form-label text-white">一次分類</label>
 <select class="form-select category1 mx-3">
 <option value="">
-전체
+全体
 </option>
 </select>
-<label class="form-label text-white">2차 분류</label>
+<label class="form-label text-white">二次分類</label>
 <select class="form-select category2 mx-3" name="cateCode">
 <option value="">
-전체
+全体
 </option>
 </select>
 </div>
 
 <div class="input-group mt-5">
-<label class="form-label text-white w-10">상품명</label>
+<label class="form-label text-white w-10">商品名</label>
 <input type="text" id="gdsName" name="gdsName" class="form-control w-90" required/>
 </div>
 
 <div class="input-group mt-5">
-<label class="form-label text-white w-10">상품가격</label>
+<label class="form-label text-white w-10">商品価格</label>
 <input type="text" id="gdsPrice" name="gdsPrice" class="form-control w-90" required/>
 </div>
 
-<div class="input-group mt-5"><!-- 실패하는 경우 수량에는 숫자가 아닌 문자열을 사용할수 없게 만듬 10 11많음 -->
-<label class="form-label text-white w-10">상품수량</label>
+<div class="input-group mt-5"><!-- 数量フィールドでは数値以外の文字列を使用できないように設定 -->
+<label class="form-label text-white w-10">商品数量</label>
 <input type="text" id="gdsStock" name="gdsStock" class="form-control w-90" required/>
 </div>
 
 <div class="input-group mt-5">
-<label class="form-label text-white w-10">상품소개</label>
-<textarea rows="5" id="gdsDes" name="gdsDes" class="form-control" required>내용을 적어주세요</textarea>
+<label class="form-label text-white w-10">商品紹介</label>
+<textarea rows="5" id="gdsDes" name="gdsDes" class="form-control" required>内容を記入してください</textarea>
 <script src="${contextPath}/resources/js/ckeditorConfig.js">
 </script>
 </div>
 
-<div class="input-group mt-5"><!-- 실제 파일을 올리는곳 -->
-<label class="form-label text-white w-10">이미지</label>
+<div class="input-group mt-5"><!-- 実際にファイルをアップロードする場所 -->
+<label class="form-label text-white w-10">イメージ</label>
 <input type="file" id="gdsImg" name="file" class="form-control w-90"/>
 </div>
 
-<!-- 아래는 올린 이미지를 확인 -->
+<!-- アップロードしたイメージを確認 -->
 <div class="select_img my-3">
 <img src="" style="width:100px;"/>
 </div>
 <div class="d-flex">
-<div class="text-white">원본 이미지</div>
+<div class="text-white">原本イメージ</div>
 <img src="${goods.gdsImg}" style="width:100px;"/>
-<div class="text-white">썸네일</div>
+<div class="text-white">サムネイル</div>
 <img src="${goods.gdsThumbImg}" style="width:50px;"/>
 </div>
 <script src="${contextPath}/resources/js/changeImgFunction.js"></script>
 <div class="text-white"><%=request.getRealPath("/") %></div>
 <button type="submit" id="register_Btn" class="btn btn-warning btn-lg btn-block my-4">
-등록
+登録
 </button>
 </form>
 <script>
 let jsonData = JSON.parse('${category}');
 </script>
-<script src="${contextPath}/resources/js/jsonDrop.js"><!--2개의 드롭다운으로 카테고리를 선택할때 json으로 오라클에db 카테고리를 선택-->
+<script src="${contextPath}/resources/js/jsonDrop.js"><!-- 二つのドロップダウンでカテゴリを選択する際、JSONを利用してOracle DBのカテゴリを選択 -->
 </script>
 </div>
 </div>
 </div>
 </div>
 </div>
-
 
 <jsp:include page="../../include/footer.jsp"/>

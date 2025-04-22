@@ -8,36 +8,32 @@
 
 <li class="list-group-item">
 	<a href="${contextPath}/admin/goods/register" class="a-link text-decoration-none">
-	상품등록
+	商品登録
 	</a>
 </li>
 
 <li class="list-group-item">
 	<a href="${contextPath}/admin/goods/list" class="a-link text-decoration-none">
-	상품목록
+	商品一覧
 	</a>
 </li>
 
 <li class="list-group-item">
 	<a href="${contextPath}/admin/shop/orderList" class="a-link text-decoration-none">
-	주문목록
+	注文一覧
 	</a>
 </li>
 
 <li class="list-group-item">
 	<a href="${contextPath}/admin/shop/allReply" class="a-link text-decoration-none">
-	상품소감
+	商品感想
 	</a>
 </li>
 
 <li class="list-group-item">
 	<a href="${contextPath}/admin/shop/allUser" class="a-link text-decoration-none">
-	유저목록
+	ユーザー一覧
 	</a>
 </li>
-
-
-
-
 
 </ul>

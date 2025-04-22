@@ -10,20 +10,20 @@
 			<jsp:include page="../include/lnb.jsp" />		
 		</div>
 		<div class="col-md-9 pt-5">
-		<h2 class="text-white fw-bold">댓글목록</h2>
+		<h2 class="text-white fw-bold">コメント一覧</h2>
 			<ul class="list-group bg-white">
 				<c:forEach items="${reply}" var="reply">
 					<li class="replyInfo list-group-item">
 						<pre>
-							<span class="fw-bold">작성자</span>		${reply.userName}(${reply.userId})	
-							<span class="fw-bold">댓글 단 제품</span>	<a href="/shop/view?n=${reply.gdsNum}">바로가기</a>
-							<span class="fw-bold">내용</span>
+							<span class="fw-bold">作成者</span>		${reply.userName}(${reply.userId})	
+							<span class="fw-bold">コメントを付けた製品</span>	<a href="/shop/view?n=${reply.gdsNum}">リンク</a>
+							<span class="fw-bold">内容</span>
 							${reply.repCon}
 						</pre>
 						<form role="form" method="post" class="">
 							<input type="hidden" name="repNum" value="${reply.repNum}"/>
 							<div class="d-flex justify-content-end my-2">
-								<button type="submit" class="delete_${reply.repNum}_btn btn btn-outline-danger">삭제</button>
+								<button type="submit" class="delete_${reply.repNum}_btn btn btn-outline-danger">削除</button>
 							</div> 
 						</form>
 					</li>

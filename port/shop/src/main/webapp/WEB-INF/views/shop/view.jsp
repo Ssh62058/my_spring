@@ -20,7 +20,7 @@
 
 <form role="form">
 <input type="hidden" name="gdsNum" value="${view.gdsNum}"/>
-<!-- 익스프레션 자바 표현식 el 익스프레션 랭귀지 -->
+<!-- エクスプレッション、Java表現式 el エクスプレッションランゲージ -->
 </form>
 
 <div class="my-3">
@@ -28,27 +28,27 @@
 </div>
 
 <div class="my-3">
-	<label class="form-label">상품명</label>
+	<label class="form-label">商品名</label>
 	<span class="mx-3">${view.gdsName}</span>
 </div>
 
 <div class="my-3">
-	<label class="form-label">카테고리</label>
+	<label class="form-label">カテゴリ</label>
 	<span class="mx-3">${view.cateName}</span>
 </div>
 
 <div class="my-3">
-<label class="form-label">가격</label>
-<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsPrice}"/>원</span>
+<label class="form-label">価格</label>
+<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsPrice}"/>円</span>
 </div>
 
 <div class="my-3">
-<label class="form-label">상품수량</label>
+<label class="form-label">商品数量</label>
 <span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsStock}"/>EA</span>
 </div>
 
 <c:if test="${view.gdsStock != 0 }">
-<span>구입 수량</span>
+<span>購入数量</span>
 <div class="d-flex w-25">
 <button type="button" class="plus btn btn-light">+</button>
 <input type="number" class="numBox form-control text-center" min="1" max="${view.gdsStock}" value="1" readonly="readonly"/>
@@ -58,41 +58,41 @@
 <script src="/resources/js/stockBtn.js"></script>
 </c:if>
 
-<!-- 장바구니에 담기 -->
+<!-- カートに入れる -->
 <div class="my-3">
 <button type="button" class="addCart_btn btn btn-outline-success">
-카트에 담기
+カートに入れる
 </button>
 <script src="/resources/js/cart.js"></script>
 </div>
 <c:if test="${view.gdsStock == 0 }">
-<p>상품 수량이 부족합니다</p>
+<p>商品数量が不足しています。</p>
 </c:if>
 
 <div class="my-3">
-<label class="form-label">상품설명</label>
+<label class="form-label">商品説明</label>
 <span class="mx-3">${view.gdsDes}</span>
 </div>
 
 <div id="reply">
 <c:if test="${member == null}">
-	<p>상품평을 남기시려면 <a href="/member/signin">로그인</a>해주세요</p>
+	<p>商品レビューを残すには<a href="/member/signin">ログイン</a>してください。</p>
 </c:if>
 
-<c:if test="${member != null}"><!-- 로그인을 하면 댓글을 사용 -->
+<c:if test="${member != null}"><!-- ログインしていればコメントが利用可能 -->
 <section class="replyForm">
-<!-- 히든으로 제품번호가 들어가야됨 -->
+<!-- 隠しフィールドに商品番号を設定 -->
 <form role="form" method="post" autocomplete="off">
 
 <input type="hidden" name="gdsNum" id="gdsNum" value="${view.gdsNum}">
-<!-- 댓글쓰기 -->
+<!-- コメントを書く -->
 <div class="my-3">
-<textarea name="repCon" id="repCon" class="form-control">상품평을 남겨주세요</textarea>
+<textarea name="repCon" id="repCon" class="form-control">商品レビューを残してください</textarea>
 </div>
 
 <div class="d-flex justify-content-end">
 <button type="button" id="reply_btn" class="btn btn-outline-primary">
-상품평쓰기
+商品レビューを書く
 </button>
 <script src="/resources/js/reply.js"></script>
 </div>
@@ -106,22 +106,21 @@
 
 </ul>
 <script>
-replyList();//헤더에서 만들 함수 호출
+replyList();//ヘッダーで作成した関数を呼び出し
 </script>
-<!-- 댓글 수정관련 스크립트 -->
+<!-- コメント修正関連スクリプト -->
 
 </section>
 </div>
 
 
 
-	
 		</div>
 	</div>
 </div>
 
 
-<!-- 리플리에 수정창 탑재 -->
+<!-- コメント修正モーダル -->
 <div class="replyModal">
 
 <div class="modalContent">
@@ -132,10 +131,10 @@ replyList();//헤더에서 만들 함수 호출
 
 	<div class="d-flex justify-content-end my-2">
 	<button type="button" class="modal_modify_btn btn btn-success mx-2">
-	수정
+	修正
 	</button>
 	<button type="button" class="modal_cancel btn btn-secondary">
-	취소
+	キャンセル
 	</button>
 	</div>
 
@@ -143,17 +142,8 @@ replyList();//헤더에서 만들 함수 호출
 <script src="/resources/js/replyDelete.js"></script>
 <script src="/resources/js/replyEdit.js"></script>
 
-<div class="modalBackground"></div><!-- 검정색 바탕에 투명도 80 -->
+<div class="modalBackground"></div><!-- 黒い背景に透明度80 -->
 </div>
-
-
-
-
-
-
-
-
-
 
 
 

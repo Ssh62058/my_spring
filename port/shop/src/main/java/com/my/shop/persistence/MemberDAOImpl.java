@@ -7,36 +7,25 @@ import org.springframework.stereotype.Repository;
 
 import com.my.shop.vo.MemberVO;
 
-@Repository//데이터 엑세스 계층 클래스에 사용
-//Persistence Layer와 관련된 클래스에 주로사용[데이터베이스와 상호작용하는 담당하는 클래스]
+@Repository // データアクセス層のクラスに使用
+// Persistence Layerに関連するクラスで主に使用される[データベースとのやり取りを担当するクラス]
 public class MemberDAOImpl implements MemberDAO {
-	
-	@Inject
-	private SqlSession sql;//sql에 명령어를 가져옴
-	
-	//매퍼설정
-	private static String namespace="com.my.shop.mappers.memberMapper";
 
-	//회원가입
-	@Override
-	public void signup(MemberVO vo) throws Exception {
-		sql.insert(namespace + ".signup", vo);
+    @Inject
+    private SqlSession sql; // SQLコマンドを取得
 
-	}
+    // マッパー設定
+    private static String namespace = "com.my.shop.mappers.memberMapper";
 
-	//로그인
-	@Override
-	public MemberVO signin(MemberVO vo) throws Exception {
-		return sql.selectOne(namespace + ".signin", vo);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    // 会員登録
+    @Override
+    public void signup(MemberVO vo) throws Exception {
+        sql.insert(namespace + ".signup", vo);
+    }
 
+    // ログイン
+    @Override
+    public MemberVO signin(MemberVO vo) throws Exception {
+        return sql.selectOne(namespace + ".signin", vo);
+    }
 }

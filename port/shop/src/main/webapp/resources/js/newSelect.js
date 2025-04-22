@@ -1,22 +1,22 @@
-$(document).ready(function () {
-  let cate1Select = $('select.category1');
-  let cate2Select = $('select.category2');
+$(document).ready(function () { // ドキュメントが準備完了したときに以下のコードを実行
+  let cate1Select = $('select.category1'); // 1次カテゴリのセレクトボックス
+  let cate2Select = $('select.category2'); // 2次カテゴリのセレクトボックス
 
-  function filterCate2() {
-    let selectedCate1 = cate1Select.val(); // 선택된 1차 카테고리
-    cate2Select.children().hide(); // 모든 옵션 숨기기
-    cate2Select.find('option[value=""]').show(); // '전체' 옵션 보이기
+  function filterCate2() { // 2次カテゴリをフィルタリングする関数
+    let selectedCate1 = cate1Select.val(); // 選択された1次カテゴリの値を取得
+    cate2Select.children().hide(); // すべてのオプションを非表示にする
+    cate2Select.find('option[value=""]').show(); // "全体"オプションを表示
 
-    // 선택된 1차 카테고리에 속하는 2차 카테고리만 표시
+    // 選択された1次カテゴリに属する2次カテゴリのみを表示
     cate2Select.find(`option[data-ref='${selectedCate1}']`).show();
   }
 
-  // 페이지 로드 시, 2차 카테고리 필터링
+  // ページロード時に2次カテゴリをフィルタリング
   filterCate2();
 
-  // 1차 카테고리가 변경되면 2차 카테고리 필터링 적용
+  // 1次カテゴリが変更された場合、2次カテゴリのフィルタリングを適用
   cate1Select.on('change', function () {
-    filterCate2();
-    cate2Select.val(''); // 1차 카테고리가 변경되면 2차 선택 초기화
+    filterCate2(); // 2次カテゴリを更新
+    cate2Select.val(''); // 1次カテゴリ変更時に2次カテゴリ選択をリセット
   });
 });

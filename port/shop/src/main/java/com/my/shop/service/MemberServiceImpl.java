@@ -8,27 +8,26 @@ import org.springframework.stereotype.Service;
 import com.my.shop.persistence.MemberDAO;
 import com.my.shop.vo.MemberVO;
 
-@Service//비즈니스 로직을 처리하는 클래스에 사용 비즈니스계층
+@Service // ビジネスロジックを処理するクラスに使用するビジネス層
 public class MemberServiceImpl implements MemberService {
-	
-	@Inject
-	private MemberDAO dao;
 
-	@Override
-	public void signup(MemberVO vo) throws Exception {
-		dao.signup(vo);
+    @Inject
+    private MemberDAO dao;
 
-	}
-//로그인
-	@Override
-	public MemberVO signin(MemberVO vo) throws Exception {
-		return dao.signin(vo);
-	}
-//로그아웃
-	@Override
-	public void signout(HttpSession session) throws Exception {
-session.invalidate();//세션 정보를 제거
-		
-	}
+    @Override
+    public void signup(MemberVO vo) throws Exception {
+        dao.signup(vo);
+    }
 
+    // ログイン
+    @Override
+    public MemberVO signin(MemberVO vo) throws Exception {
+        return dao.signin(vo);
+    }
+
+    // ログアウト
+    @Override
+    public void signout(HttpSession session) throws Exception {
+        session.invalidate(); // セッション情報を削除する
+    }
 }

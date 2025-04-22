@@ -14,8 +14,8 @@
 <jsp:include page="../include/lnb.jsp"/>
 </div>
 <div class="w-75 p-3 mt-5 pt-5 ">
-<!-- 내용 -->
-<h2 class="text-white fw-bold">상품목록</h2>
+<!-- コンテンツ -->
+<h2 class="text-white fw-bold">商品一覧</h2>
 <div class="my-3">
 <ul class="breadcrumb">
   <li class="breadcrumb-item text-warning"><a href="#" class="text-warning">Photos</a></li>
@@ -36,7 +36,7 @@
 </colgroup>
 <thead>
 <tr class="text-center">
-<th>번호</th><th>상품이미지</th><th>상품제목</th><th>카테고리</th><th>가격</th><th>수량</th><th>등록날짜</th>
+<th>番号</th><th>商品画像</th><th>商品タイトル</th><th>カテゴリー</th><th>価格</th><th>数量</th><th>登録日</th>
 </tr>
 </thead>
 
@@ -47,8 +47,8 @@
 <td><img src="${list.gdsThumbImg}" class="thumb img-thumbnail"/></td>
 <td>
 <a href="/admin/goods/view?n=${list.gdsNum}" class="text-white">
-<!-- 제목을 클릭할때 맞는 순번 상품순서로 view page-->
-${list.gdsName}<!-- 제목 -->
+<!-- タイトルをクリックすると、対応する順番の商品詳細ページに遷移 -->
+${list.gdsName}<!-- タイトル -->
 </a>
 </td>
 <td class="text-center">${list.cateCode}</td>
@@ -61,7 +61,6 @@ ${list.gdsName}<!-- 제목 -->
 </table>
 
 
-
 <div class="d-flex justify-content-center my-5">
 <ul class="pagination">
   <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -70,23 +69,11 @@ ${list.gdsName}<!-- 제목 -->
   <li class="page-item"><a class="page-link" href="#">3</a></li>
   <li class="page-item"><a class="page-link" href="#">Next</a></li>
 </ul>
-
-
-
-</div>
-
-
-
-
-
-
-
-
 </div>
 </div>
 </div>
 </div>
 </div>
-
+</div>
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.my.shop" />
-	<!-- 인터셉터 -->
+	<!-- インターセプター -->
 <beans:bean id="AdminInterceptor" class="com.my.shop.interceptor.AdminInterceptor"/>
 	<interceptors>
 	<interceptor>
@@ -31,19 +31,19 @@
 	</interceptor>
 </interceptors>	
 
-<!-- 업로드 패스설정 -->
+<!-- アップロードパス設定 -->
 <beans:bean class="java.lang.String" id="uploadPath">
 <beans:constructor-arg value="C:\dev_ssh2\workplace\port\shop\src\main\webapp\resources"/>
 </beans:bean>
 
-<!-- 일반 파일 업로드 경로 -->
+<!-- 一般ファイルアップロードパス -->
 <resources location="/resources/imgUpload/" mapping="/imgUpload/**"/>
 <beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
 <beans:property name="maxUploadSize" value="10485760"/>
 </beans:bean>	
-<!-- ck에디터 파일 업로드 경로 -->
+<!-- CKEditor ファイルアップロードパス -->
 <resources location="/resources/ckUpload/" mapping="/ckUpload/**"/>	
-
+<!-- イメージパス設定 -->
 <resources location="/resources/images/" mapping="/images/**"/>	
 	
 	

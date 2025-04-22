@@ -12,51 +12,51 @@ import com.my.shop.vo.ReplyListVO;
 import com.my.shop.vo.ReplyVO;
 
 public interface ShopDAO {
-	
-	//�긽�뭹由ъ뒪�듃
-	public List<GoodsViewVO> list(int cateCode, int cateCodeRef) throws Exception;
 
-	List<GoodsViewVO> list(int cateCode) throws Exception;
-	
-	//�긽�뭹 view page
-	public GoodsViewVO goodsView(int gdsNum)throws Exception;
-	
-	//�뙎湲��벐湲�
-	public void registReply(ReplyVO reply)throws Exception;	
-	//�뙎湲�由ъ뒪�듃
-	public List<ReplyListVO> replyList(int gdsNum)throws Exception;
-	//�뙎湲��궘�젣
-	public void deleteReply(ReplyVO reply)throws Exception;	
-	//�븘�씠�뵒 泥댄겕
-	public String idCheck(int repNum) throws Exception;	
-	//�뙎湲��닔�젙
-	public void modifyReply(ReplyVO reply)throws Exception;
-	
-//移댄듃�떞湲�
-public void addCart(CartVO cart) throws Exception;
-	
-//移댄듃由ъ뒪�듃
-public List<CartListVO> cartList(String userId) throws Exception;
+    // 商品リスト
+    public List<GoodsViewVO> list(int cateCode, int cateCodeRef) throws Exception;
 
-//移댄듃 �궘�젣
-public void deleteCart(CartVO cart) throws Exception;
+    public List<GoodsViewVO> list(int cateCode) throws Exception;
 
+    // 商品のビュー画面
+    public GoodsViewVO goodsView(int gdsNum) throws Exception;
 
-//오더리스트
-public void orderInfo(OrderVO order)throws Exception;
+    // コメント登録
+    public void registReply(ReplyVO reply) throws Exception;
 
-//오더뷰 상세정보 디테일 리드
-public void orderInfo_Details(OrderDetailVO orderDetail)throws Exception;
+    // コメントリスト
+    public List<ReplyListVO> replyList(int gdsNum) throws Exception;
 
-//모두 삭제
-public void cartAllDelete(String userId)throws Exception;
-	
-//특정 오더리스트
-public List<OrderVO> orderList(OrderVO order)throws Exception;
+    // コメント削除
+    public void deleteReply(ReplyVO reply) throws Exception;
 
-//특정 오더뷰
-public List<OrderListVO> orderView(OrderVO order)throws Exception;	
-	
-	
+    // ユーザーID確認
+    public String idCheck(int repNum) throws Exception;
 
+    // コメント修正
+    public void modifyReply(ReplyVO reply) throws Exception;
+
+    // カート追加
+    public void addCart(CartVO cart) throws Exception;
+
+    // カートリスト
+    public List<CartListVO> cartList(String userId) throws Exception;
+
+    // カート削除
+    public void deleteCart(CartVO cart) throws Exception;
+
+    // 注文リスト
+    public void orderInfo(OrderVO order) throws Exception;
+
+    // 注文詳細情報取得
+    public void orderInfo_Details(OrderDetailVO orderDetail) throws Exception;
+
+    // カート全削除
+    public void cartAllDelete(String userId) throws Exception;
+
+    // 特定の注文リスト
+    public List<OrderVO> orderList(OrderVO order) throws Exception;
+
+    // 特定の注文ビュー
+    public List<OrderListVO> orderView(OrderVO order) throws Exception;
 }

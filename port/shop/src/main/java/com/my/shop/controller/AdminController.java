@@ -257,7 +257,7 @@ public String PostAllReply(ReplyVO reply) throws Exception{
 
 @GetMapping(value="/shop/allUser")
 public void getUserList(Model model) throws Exception{
-	logger.info("유저 테이블");
+	logger.info("ユーザテーブル");
 	List<MemberVO> memberVO = adminService.memberList();
 	model.addAttribute("memberList", memberVO);
 }

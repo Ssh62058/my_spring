@@ -10,39 +10,45 @@ import com.my.shop.vo.OrderListVO;
 import com.my.shop.vo.OrderVO;
 import com.my.shop.vo.ReplyListVO;
 
-//dao를 호출하는 서비스를 생성합니다
+// DAOを呼び出すサービスを生成します
 public interface AdminService {
 
-	//카테고리
-	public List<CategoryVO> category() throws Exception;
-	
-	//상품등록
-	public void register(GoodsVO vo) throws Exception;
-	
-	//상품목록
-	public List<GoodsViewVO> goodslist() throws Exception;
-	
-	//상품조회
-	public GoodsViewVO goodsView(int gdsNum) throws Exception;
-	
-	//상품수정
-	public void goodsModify(GoodsVO vo) throws Exception;
-	
-	//상품삭제
-	public void goodsDelete(int gdsNum) throws Exception;
-	
-	//주문 목록
-	public List<OrderVO> orderList() throws Exception;
-	//특정 주문 목록
-	public List<OrderListVO> orderView(OrderVO order) throws Exception;
-	//배송 상태
-	public void delivery(OrderVO order) throws Exception;
-	//상품 수량 조절
-	public void changeStock(GoodsVO goods) throws Exception;
-	//댓글 목록
-	public List<ReplyListVO> allReply() throws Exception;
-	//댓글 삭제
-	public void deleteReply(int repNum) throws Exception;
-	//유저 리스트
-	public List<MemberVO> memberList() throws Exception;
+    // カテゴリー
+    public List<CategoryVO> category() throws Exception;
+
+    // 商品登録
+    public void register(GoodsVO vo) throws Exception;
+
+    // 商品リスト
+    public List<GoodsViewVO> goodslist() throws Exception;
+
+    // 商品の詳細
+    public GoodsViewVO goodsView(int gdsNum) throws Exception;
+
+    // 商品修正
+    public void goodsModify(GoodsVO vo) throws Exception;
+
+    // 商品削除
+    public void goodsDelete(int gdsNum) throws Exception;
+
+    // 注文リスト
+    public List<OrderVO> orderList() throws Exception;
+
+    // 特定の注文リスト
+    public List<OrderListVO> orderView(OrderVO order) throws Exception;
+
+    // 配送状態
+    public void delivery(OrderVO order) throws Exception;
+
+    // 商品数量調整
+    public void changeStock(GoodsVO goods) throws Exception;
+
+    // コメントリスト
+    public List<ReplyListVO> allReply() throws Exception;
+
+    // コメント削除
+    public void deleteReply(int repNum) throws Exception;
+
+    // ユーザーリスト
+    public List<MemberVO> memberList() throws Exception;
 }

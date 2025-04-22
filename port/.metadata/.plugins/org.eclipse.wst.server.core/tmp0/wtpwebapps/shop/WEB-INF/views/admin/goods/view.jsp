@@ -14,18 +14,18 @@
 </div>
 <div class="w-75 p-5 mt-5 pt-5">
 <h1 class="my-5 text-white">view</h1>
-<form role="form" method="post" autocomplete="off"><!-- jquery나 ajax일때는 method form 적지 말것 -->
+<form role="form" method="post" autocomplete="off"><!-- jqueryやajaxの場合、formのmethod属性を記載しない -->
 <input type="hidden" name="n" value="${goods.gdsNum}"/>
-<!-- 카테고리 -->
+<!-- カテゴリ -->
 <div class="input-group">
-<label class="form-label fw-bold text-white">1차 분류</label>
+<label class="form-label fw-bold text-white">一次分類</label>
 <span class=" mx-2 text-white">${goods.cateName}</span>
-<label class="form-label fw-bold text-white">2차 분류</label>
+<label class="form-label fw-bold text-white">二次分類</label>
 <span class=" mx-2 text-white">${goods.cateCode}</span>
 </div>
 
 <div class="input-group">
-	<label class="form-label w-25 fw-bold text-white">메인 이미지</label>
+	<label class="form-label w-25 fw-bold text-white">メイン画像</label>
 	
 </div>
 
@@ -34,42 +34,40 @@
 </div>
 
 <div class="input-group">
-	<label class="form-label w-25 fw-bold text-white">상품명</label>
+	<label class="form-label w-25 fw-bold text-white">商品名</label>
 	<span class="w-75 text-white">${goods.gdsName}</span>
 </div>
 
 <div class="input-group">
-	<label class="form-label w-25 fw-bold text-white">상품가격</label>
+	<label class="form-label w-25 fw-bold text-white">商品価格</label>
 	<span class="w-75 text-white">
 <fmt:formatNumber value="${goods.gdsPrice}" pattern="###,###,###"/>
 	</span>
 </div>
 
 <div class="input-group">
-	<label class="form-label w-25 fw-bold text-white">상품수량</label>
+	<label class="form-label w-25 fw-bold text-white">商品数量</label>
 	<span class="w-75 text-white">${goods.gdsStock}</span>
 </div>
 
 <div class="input-group">
-	<label class="form-label w-25 fw-bold text-white">상품소개</label>
+	<label class="form-label w-25 fw-bold text-white">商品紹介</label>
 	<span class="w-75 text-white">${goods.gdsDes}</span>
 </div>
 
 <div class="d-flex justify-content-end my-5">
 	<div class="btn-group">
-		<button id="modify_Btn" class="btn btn-outline-warning btn-lg">수정</button>
-		<button id="delete_Btn" class="btn btn-outline-warning btn-lg">삭제</button>
+		<button id="modify_Btn" class="btn btn-outline-warning btn-lg">修正</button>
+		<button id="delete_Btn" class="btn btn-outline-warning btn-lg">削除</button>
 	</div>
 </div>
 <script src="${contextPath}/resources/js/viewjs_01.js"></script>
 </form>
-<!-- 무리가 없는한 자바스크립트나 jquery는 linking으로 -->
-
+<!-- 問題がない場合、JavaScriptやjQueryはlinkingで -->
 </div>
 </div>
 </div>
 </div>
 </div>
-
 
 <jsp:include page="../../include/footer.jsp"/>

@@ -3,15 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.my.shop.mappers.adminMapper">
-<!-- 카테고리 호출 -->
+
+<!-- カテゴリ取得 -->
 <select id="category" resultType="com.my.shop.vo.CategoryVO">
 <![CDATA[
 select
 level, cateName, cateCode, cateCodeRef
 from goods_category
-start with cateCodeRef is null connect by prior cateCode = cateCoderef
+start with cateCodeRef is null connect by prior cateCode = cateCodeRef
 ]]>
 </select>
+
 <insert id="register" parameterType="com.my.shop.vo.GoodsVO">
 <![CDATA[
 insert into tbl_goods(gdsNum, gdsName, cateCode, gdsPrice, gdsStock, gdsDes, gdsImg, gdsThumbImg)
@@ -19,7 +21,8 @@ values
 (seq_gdsNum.nextval, #{gdsName}, #{cateCode}, #{gdsPrice}, #{gdsStock}, #{gdsDes}, #{gdsImg}, #{gdsThumbImg})
 ]]>
 </insert>
-<!-- 상품목록 -->
+
+<!-- 商品リスト -->
 <select id="goodslist" resultType="com.my.shop.vo.GoodsVO">
 <![CDATA[
 select
@@ -28,6 +31,7 @@ from tbl_goods
 order by gdsNum desc
 ]]>
 </select>
+
 <select id="goodsView" resultType="com.my.shop.vo.GoodsViewVO">
 <![CDATA[
 select
@@ -35,10 +39,11 @@ g.gdsNum, g.gdsName, g.cateCode, c.cateCodeRef, c.cateName, gdsPrice, gdsStock, 
 g.gdsImg, g.gdsThumbImg
 from tbl_goods g
 inner join goods_category c
-on g.cateCode = c.cateCode            
+on g.cateCode = c.cateCode
 where g.gdsNum = #{gdsNum}
 ]]>
 </select>
+
 <update id="goodsModify">
 <![CDATA[
 update tbl_goods
@@ -47,20 +52,23 @@ gdsName = #{gdsName}, cateCode=#{cateCode}, gdsPrice = #{gdsPrice}, gdsStock=#{g
 where gdsNum = ${gdsNum}
 ]]>
 </update>
+
 <delete id="goodsDelete">
 <![CDATA[
 delete tbl_goods where gdsNum = #{gdsNum}
 ]]>
 </delete>
+
 <insert id="addCart">
 <![CDATA[
-insert into tbl_cart (cartNum,userId,gdsNum,cartStock) values (seq_tbl_cart.nextval,#{userId},#{gdsNum},#{cartStock})
+insert into tbl_cart (cartNum, userId, gdsNum, cartStock) values (seq_tbl_cart.nextval, #{userId}, #{gdsNum}, #{cartStock})
 ]]>
 </insert>
+
 <select id="cartList" resultType="com.my.shop.vo.CartListVO">
 <![CDATA[
 select 
-row_number() over(order by c.cartNum desc) as num
+row_number() over(order by c.cartNum desc) as num,
 c.cartNum, c.userId, c.gdsNum, c.cartStock, g.addDate,
 g.gdsName, g.gdsPrice, g.gdsThumbImg
 from tbl_cart c
@@ -69,6 +77,7 @@ on c.gdsNum = g.gdsNum
 where c.userId = #{userId}
 ]]>
 </select>
+
 <select id="orderList" resultType="com.my.shop.vo.OrderVO">
 <![CDATA[
 select
@@ -76,6 +85,7 @@ orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhone, amount, 
 from tbl_order
 ]]>
 </select>
+
 <select id="orderView" resultType="com.my.shop.vo.OrderListVO">
 <![CDATA[
 select
@@ -90,6 +100,7 @@ on d.gdsNum = g.gdsNum
 where o.orderId = #{orderId}
 ]]>
 </select>
+
 <update id="delivery">
 <![CDATA[
 update tbl_order 
@@ -97,6 +108,7 @@ set delivery = #{delivery}
 where orderId = #{orderId}
 ]]>
 </update>
+
 <update id="changeStock">
 <![CDATA[
 update tbl_goods 
@@ -104,6 +116,7 @@ set gdsStock = gdsStock - #{gdsStock}
 where gdsNum = #{gdsNum}
 ]]>
 </update>
+
 <select id="allReply" resultType="com.my.shop.vo.ReplyListVO">
 <![CDATA[
 select
@@ -114,11 +127,13 @@ inner join tbl_member m
 on r.userId = m.userId
 ]]>
 </select>
+
 <delete id="deleteReply">
 <![CDATA[
 delete tbl_reply where repNum = #{repNum}
 ]]>
 </delete>
+
 <select id="memberList" resultType="com.my.shop.vo.MemberVO">
 <![CDATA[
 select userId, userPass, userPassRe, userName, userPhone, userEmail, userGender, userAddr1, userAddr2, userAddr3, verify, regiDate
@@ -126,38 +141,23 @@ from
 tbl_member
 ]]>
 </select>
+
 <!-- 
-Join : 두개 이상의 테이블에서 관련 열을 기준으로 행을 결합할때 사용
-내부 조인[INNER JOIN] : 두 테이블에서 일치하는 값을 갖는 레코드를 선택
-on g.cateCode = c.cateCode g테이블과 c테이블의 값이 같을때 두테이블의 데이터를 결합
+Join : 複数のテーブルで関連する列を基準に行を結合する際に使用
+内部結合[INNER JOIN] : 両方のテーブルで一致する値を持つレコードを選択
+on g.cateCode = c.cateCode : gテーブルとcテーブルの値が一致する場合、両方のテーブルのデータを結合
 
-왼쪽 조인[LEFT JOIN] : 왼쪽 테이블의 모든 레코드와 오른쪽 테이블에 일치하는 레코드를 리턴
-오른쪽 조인[RIGHT JOIN]: 오른쪽 테이블의 모든 레코드와 왼쪽 테이블에 일치하는 레코드를 리턴
-전체[FULL]:왼쪽 오른쪽 테이블 레코드에 일치하는 항목이 있을 경우 모든레코드 리턴
-셀프[self]:테이블 자체가 자체적으로 조인됩니다
+左結合[LEFT JOIN] : 左側のテーブルのすべてのレコードと、右側のテーブルの一致するレコードを返す
+右結合[RIGHT JOIN]: 右側のテーブルのすべてのレコードと、左側の一致するレコードを返す
+全体結合[FULL]: 左右のテーブルのすべてのレコードを一致する場合に返す
+自己結合[self]: テーブルが自己自身と結合されます
 
-별칭 tbl_goods.gdsNum 간단한 별칭 g.gdsNum
-
-import numpy as np
-xpoint = numpy.array([0, 6])
+エイリアス tbl_goods.gdsNum : 簡単なエイリアス g.gdsNum
  -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper>
+
 <!-- 
-start with cateCodeRef is null => 계층적구조에 시작점
-connect by prior cateCode = cateCoderef => 부모범주가 이전레벨(현재범주)와 일치하는지 재귀적으로 찾도록 지시
+start with cateCodeRef is null => 階層構造の開始点
+connect by prior cateCode = cateCodeRef => 親カテゴリが前のレベル(現在のカテゴリ)と一致しているかを再帰的に検索
  -->

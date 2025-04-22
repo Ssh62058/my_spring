@@ -13,24 +13,24 @@
 				<c:forEach items="${orderView}" var="orderView" varStatus="status">
 					<c:if test="${status.first}">
 						<pre>
-		<span class="fw-bold">주문자</span>	${orderView.userId}	
-		<span class="fw-bold">수령인</span>	${orderView.orderRec}	
-		<span class="fw-bold">주소</span>		(${orderView.userAddr1}) ${orderView.userAddr1} ${orderView.userAddr1}
-		<span class="fw-bold">가격</span>		<fmt:formatNumber pattern="###,###,###" value="${orderView.amount}"/>
-		<span class="fw-bold">상태</span>		${orderView.delivery}
+		<span class="fw-bold">注文者</span>		${orderView.userId}	
+		<span class="fw-bold">受取人</span>		${orderView.orderRec}	
+		<span class="fw-bold">住所</span>		(${orderView.userAddr1}) ${orderView.userAddr1} ${orderView.userAddr1}
+		<span class="fw-bold">価格</span>		<fmt:formatNumber pattern="###,###,###" value="${orderView.amount}"/>
+		<span class="fw-bold">状態</span>		${orderView.delivery}
 						</pre>
 						<div class="">
 							<form role="form" method="post" class="deliveryForm" autocomplete="off" name="form">
 								<input type="hidden" name="orderId" value="${orderView.orderId}"/>
 								<input type="hidden" name="delivery" value=""/>
 								<div class="d-flex justify-content-end">
-									<button type="button" class="delivery1_btn btn btn-primary">배송중</button>
-									<button type="button" class="delivery2_btn btn btn-success">배송완료</button>
+									<button type="button" class="delivery1_btn btn btn-primary">配送中</button>
+									<button type="button" class="delivery2_btn btn btn-success">配送完了</button>
 								</div>
 							</form>
 							</c:if>
 							</c:forEach>
-							<h2>주문 상세</h2>	
+							<h2>注文詳細</h2>	
 							<hr color="black" style="width:120px; border: 1px solid;"/>
 							<ul class="orderView bg-white list-group">
 							<table class="table table-dark table-hover">
@@ -54,10 +54,10 @@
 								</td>
 								<td>
 								<pre>
-		<span class="fw-bold">상품명</span>		${orderView.gdsName}	
-		<span class="fw-bold">개당 가격</span>		<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> 원
-		<span class="fw-bold">주소</span>			${orderView.cartStock} 개
-		<span class="fw-bold">가격</span>			<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> 원						
+		<span class="fw-bold">商品名</span>			${orderView.gdsName}	
+		<span class="fw-bold">単価</span>			<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> 円
+		<span class="fw-bold">個数</span>			${orderView.cartStock} 個
+		<span class="fw-bold">価格</span>			<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> 円						
 								</pre>
 								</li>
 								</td>

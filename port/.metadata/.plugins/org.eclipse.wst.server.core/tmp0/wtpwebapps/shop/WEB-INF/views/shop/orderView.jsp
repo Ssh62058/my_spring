@@ -16,15 +16,15 @@
 			<c:forEach items="${orderView}" var="orderView" varStatus="status">
 				<c:if test="${status.first}">
 					<pre>
-	<span class="fw-bold">주문자</span>	${orderView.userId}
-	<span class="fw-bold">수령인</span>	${orderView.orderRec}
-	<span class="fw-bold">주소지</span>	(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}
-	<span class="fw-bold">가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/>
-	<span class="fw-bold">상태</span> 	${orderView.delivery}
+	<span class="fw-bold">注文者</span>	${orderView.userId}
+	<span class="fw-bold">受取人</span>	${orderView.orderRec}
+	<span class="fw-bold">住所地</span>	(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}
+	<span class="fw-bold">価格</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/>
+	<span class="fw-bold">状態</span> 	${orderView.delivery}
 					</pre>
 				</c:if>
 			</c:forEach>
-			<h2>주문 상세</h2>	
+			<h2>注文詳細</h2>	
 			<hr color="black" style="width:120px; border: 1px solid;"/>
 			<ul class="orderView list-group mt-3">
 			<table class="table table-dark table-hover">
@@ -49,10 +49,10 @@
 			<td>
 			<div>
 			<pre>
-			<span class="fw-bold">상품 명</span>  		${orderView.gdsName}
-			<span class="fw-bold">개당 가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> WON
-			<span class="fw-bold">구입 수량</span> 	${orderView.cartStock} 개
-			<span class="fw-bold">최종 가격</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> WON
+			<span class="fw-bold">商品名</span>  	${orderView.gdsName}
+			<span class="fw-bold">単価</span> 		<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> WON
+			<span class="fw-bold">購入数量</span> 	${orderView.cartStock} 個
+			<span class="fw-bold">最終価格</span> 	<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> WON
 			</pre>
 			</div>
 			</li>

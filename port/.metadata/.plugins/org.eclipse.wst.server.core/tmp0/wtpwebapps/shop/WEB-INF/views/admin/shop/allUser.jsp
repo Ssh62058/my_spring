@@ -10,7 +10,7 @@
 <jsp:include page="../include/lnb.jsp" />		
 		</div>
 		<div class="col-md-9 pt-5">
-			<h2 class="text-white fw-bold">회원목록</h2>
+			<h2 class="text-white fw-bold">会員一覧</h2>
 			<table class="table table-hover">
 				<colgroup>
 					<col style="width:11.11%"/>
@@ -26,15 +26,15 @@
 				</colgroup>
 				<thead>
 					<tr>
-					<th>유 저 아 이 디</th>
-					<th>이 름</th>
-					<th>유 저 이 메 일</th>
-					<th>전 화 번 호</th>
-					<th>주 소 1</th>
-					<th>주 소 2</th>
-					<th>주 소 3</th>
-					<th>가 입 일</th>
-					<th>회 원 등 급</th>
+					<th>ユーザーID</th>
+					<th>名前</th>
+					<th>ユーザーのメールアドレス</th>
+					<th>電話番号</th>
+					<th>住所1</th>
+					<th>住所2</th>
+					<th>住所3</th>
+					<th>登録日</th>
+					<th>会員グレード</th>
 					</tr>
 				</thead>
 				<tbody>
