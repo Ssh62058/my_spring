@@ -3,7 +3,7 @@
 %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<jsp:include page="../../include/header.jsp" flush="false"/>
+<jsp:include page="../../include/header.jsp" flush="false"/> <!-- ヘッダー部分のインクルード -->
 
 <div class="container-fluid bg-gradient-primary min-vh-100">
 <div class="row">
@@ -11,28 +11,20 @@
 <div class="d-flex">
 <div class="w-25">
 <div class="mt-5 pt-5"></div>
-<jsp:include page="../include/lnb.jsp"/>
+<jsp:include page="../include/lnb.jsp"/> <!-- サイドメニュー部分のインクルード -->
 </div>
 <div class="w-75 p-3 mt-5 pt-5 ">
-<!-- コンテンツ -->
+<!-- コンテンツ表示部分 -->
 <h2 class="text-white fw-bold">商品一覧</h2>
-<div class="my-3">
-<ul class="breadcrumb">
-  <li class="breadcrumb-item text-warning"><a href="#" class="text-warning">Photos</a></li>
-  <li class="breadcrumb-item text-warning"><a href="#" class="text-warning">Summer 2017</a></li>
-  <li class="breadcrumb-item text-warning"><a href="#" class="text-warning">Italy</a></li>
-  <li class="breadcrumb-item active text-white fw-bold">Rome</li>
-</ul>
-</div>
 <table class="table table-dark table-hover">
 <colgroup>
-<col width="5%"/>
-<col width="10%"/>
-<col width="40%"/>
-<col width="10%"/>
-<col width="5%"/>
-<col width="5%"/>
-<col width="20%"/>
+<col width="5%"/> <!-- 番号列の幅 -->
+<col width="10%"/> <!-- 商品画像列の幅 -->
+<col width="40%"/> <!-- 商品タイトル列の幅 -->
+<col width="10%"/> <!-- カテゴリー列の幅 -->
+<col width="5%"/> <!-- 価格列の幅 -->
+<col width="5%"/> <!-- 数量列の幅 -->
+<col width="20%"/> <!-- 登録日列の幅 -->
 </colgroup>
 <thead>
 <tr class="text-center">
@@ -41,33 +33,33 @@
 </thead>
 
 <tbody>
-<c:forEach items="${list}" var="list">
+<c:forEach items="${list}" var="list"> <!-- 商品リストをループして表示 -->
 <tr>
-<td class="text-center">${list.gdsNum}</td>
-<td><img src="${list.gdsThumbImg}" class="thumb img-thumbnail"/></td>
+<td class="text-center">${list.gdsNum}</td> <!-- 商品番号 -->
+<td><img src="${list.gdsThumbImg}" class="thumb img-thumbnail"/></td> <!-- 商品画像 -->
 <td>
 <a href="/admin/goods/view?n=${list.gdsNum}" class="text-white">
-<!-- タイトルをクリックすると、対応する順番の商品詳細ページに遷移 -->
-${list.gdsName}<!-- タイトル -->
+<!-- タイトルをクリックすると、対応する商品の詳細ページに遷移 -->
+${list.gdsName} <!-- 商品タイトル -->
 </a>
 </td>
-<td class="text-center">${list.cateCode}</td>
-<td class="text-center">${list.gdsPrice}</td>
-<td class="text-center">${list.gdsStock}</td>
-<td class="text-center">${list.gdsDate}</td>
+<td class="text-center">${list.cateCode}</td> <!-- カテゴリーコード -->
+<td class="text-center">${list.gdsPrice}</td> <!-- 商品価格 -->
+<td class="text-center">${list.gdsStock}</td> <!-- 商品数量 -->
+<td class="text-center">${list.gdsDate}</td> <!-- 登録日 -->
 </tr>
 </c:forEach>
 </tbody>
 </table>
 
 
-<div class="d-flex justify-content-center my-5">
+<div class="d-flex justify-content-center my-5"> <!-- ページネーション部分 -->
 <ul class="pagination">
-  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-  <li class="page-item"><a class="page-link" href="#">2</a></li>
-  <li class="page-item"><a class="page-link" href="#">3</a></li>
-  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  <li class="page-item"><a class="page-link" href="#">Previous</a></li> <!-- 前のページ -->
+  <li class="page-item active"><a class="page-link" href="#">1</a></li> <!-- 現在のページ -->
+  <li class="page-item"><a class="page-link" href="#">2</a></li> <!-- 次のページ -->
+  <li class="page-item"><a class="page-link" href="#">3</a></li> <!-- さらに次のページ -->
+  <li class="page-item"><a class="page-link" href="#">Next</a></li> <!-- 次のページ -->
 </ul>
 </div>
 </div>
@@ -76,4 +68,4 @@ ${list.gdsName}<!-- タイトル -->
 </div>
 </div>
 
-<jsp:include page="../../include/footer.jsp"/>
+<jsp:include page="../../include/footer.jsp"/> <!-- フッター部分のインクルード -->

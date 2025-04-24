@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.shop.mappers.shopMapper">
+
+<select id="list_1" resultType="com.my.shop.vo.GoodsViewVO">
+<![CDATA[
+select
+g.gdsNum, g.gdsName, g.cateCode, c.cateCodeRef, c.cateName, gdsPrice, gdsStock, gdsDes, gdsDate, g.gdsImg, g.gdsThumbImg
+from tbl_goods g
+inner join goods_category c
+on g.cateCode = c.cateCode
+where g.cateCode = #{cateCode}
+or c.cateCodeRef = #{cateCodeRef}
+]]>
+</select>
+
+<select id="list_2" resultType="com.my.shop.vo.GoodsViewVO">
+<![CDATA[
+select
+g.gdsNum, g.gdsName, g.cateCode, c.cateCodeRef, c.cateName, gdsPrice, gdsStock, gdsDes, gdsDate, g.gdsImg, g.gdsThumbImg
+from tbl_goods g
+inner join goods_category c
+on g.cateCode = c.cateCode
+where g.cateCode = #{cateCode}
+or c.cateCodeRef = #{cateCodeRef}
+]]>
+</select>
+
+<select id="goodsView" resultType="com.my.shop.vo.GoodsViewVO"> <!-- ビュー -->
+<![CDATA[
+select
+g.gdsNum, g.gdsName, g.cateCode, c.cateCodeRef, c.cateName, gdsPrice, gdsStock, gdsDes, gdsDate, g.gdsImg, g.gdsThumbImg
+from tbl_goods g
+inner join goods_category c
+on g.cateCode = c.cateCode
+where g.gdsNum = #{gdsNum}
+]]>
+</select>
+
+<!-- 
+消費者が見るページの最初のリストを作成
+- 特徴 -
+カテゴリ別に分類される必要がある (グループを設定 level 1depth[マックランチ] 2depth[メニュー])
+リストを2段階で表現する必要があります
+ジョインを実行
+グループを設定して、ナビゲーションでクリックしたとき、そのグループの商品だけを表示する必要があります
+ -->
+
+<!-- コメント開始 -->
+<insert id="registReply">
+<![CDATA[
+insert into tbl_reply(gdsNum, userId, repNum, repCon)
+values
+(#{gdsNum}, #{userId}, seq_tbl_reply.nextval, #{repCon})
+]]>
+</insert>
+
+<select id="replyList" resultType="com.my.shop.vo.ReplyListVO">
+<![CDATA[
+select
+r.gdsNum, r.userId, r.repNum, r.repCon, r.repDate, m.userName
+from tbl_reply r 
+inner join tbl_member m
+on r.userId = m.userId
+where gdsNum = #{gdsNum}
+]]>
+</select>
+
+<delete id="deleteReply"> <!-- セッションのため基準を2つ -->
+<![CDATA[
+delete tbl_reply
+where repNum = #{repNum} and userId = #{userId}
+]]>
+</delete>
+
+<!-- ユーザーID確認 -->
+<select id="replyUserIdCheck" resultType="String">
+<![CDATA[
+select userId from tbl_reply where repNum = #{repNum}
+]]>
+</select>
+
+<update id="modifyReply">
+<![CDATA[
+update tbl_reply
+set
+repCon = #{repCon}
+where repNum = #{repNum}
+and userId = #{userId}
+]]>
+</update>
+<!-- コメント終了 -->
+
+<!-- カート追加 -->
+<insert id="addCart">
+<![CDATA[
+insert into tbl_cart(cartNum, userId, gdsNum, cartStock)
+values
+( seq_tbl_cart.nextval,#{userId}, #{gdsNum}, #{cartStock})
+]]>
+</insert>
+
+<!-- カートリスト -->
+<select id="cartList" resultType="com.my.shop.vo.CartListVO">
+<![CDATA[
+select
+row_number() over(order by c.cartNum desc) as num,
+c.cartNum, c.userId, c.gdsNum, c.cartStock, c.addDate,
+g.gdsName, g.gdsPrice, g.gdsThumbImg
+from tbl_cart c
+inner join tbl_goods g
+on c.gdsNum = g.gdsNum
+where c.userId= #{userId}
+]]>
+</select>
+
+<!-- 
+row_number() over(order by c.cartNum desc) as num,
+降順 row_number()[ウィンドウ関数] 各行に固有の番号を割り当て cartNum
+row_number()[ウィンドウ関数] 番号は基本的に1から始まり、行の順序に応じて増加
+注意: 同じ値に対して固有の番号が割り当てられるため、同じ値が複数回現れても
+番号が異なります
+ -->
+
+<!-- カート削除 -->
+<delete id="deleteCart">
+<![CDATA[
+delete tbl_cart where cartNum = #{cartNum} and userId = #{userId}
+]]>
+</delete>
+
+<!-- 注文情報 -->
+<insert id="orderInfo"> <!-- SQLマッピングクエリ  #{} パラメータバインディング[この部分は実行時に実際の値に置き換えられる] 例えば #{orderId} は orderId という変数の値に変わります -->
+<![CDATA[
+insert into tbl_order(orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhone, amount)
+values
+(#{orderId}, #{userId}, #{orderRec}, #{userAddr1}, #{userAddr2}, #{userAddr3}, #{orderPhone}, #{amount})
+]]>
+</insert>
+
+<!-- 注文詳細情報 -->
+<insert id="orderInfo_Details">
+<![CDATA[
+insert into tbl_order_details(orderDetailsNum, orderId, gdsNum, cartStock)
+select seq_tbl_order_details.nextval, #{orderId}, gdsNum, cartStock
+from tbl_cart
+]]>
+</insert>
+
+<!-- 特定注文リスト -->
+<select id="orderList" resultType="com.my.shop.vo.OrderVO">
+<![CDATA[
+select
+orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhone, amount, orderDate, delivery
+from tbl_order
+where userId = #{userId}
+]]>
+ </select>
+
+<select id="orderView" resultType="com.my.shop.vo.OrderListVO">
+<![CDATA[
+select
+o.userId ,o.orderId, o.userId, o.orderRec, o.userAddr1, o.userAddr2, o.userAddr3, o.orderPhone, o.amount, o.orderDate,
+g.gdsName, g.gdsThumbImg, g.gdsPrice, d.cartStock
+from tbl_order o
+inner join tbl_order_details d
+on o.orderId = d.orderId
+inner join tbl_goods g
+on d.gdsNum = g.gdsNum
+where o.userId = #{userId} and o.orderId = #{orderId}
+]]>
+ </select>
+
+<delete id="cartAllDelete">
+<![CDATA[
+delete tbl_cart where userId = #{userId}
+]]>
+</delete>
+
+</mapper>

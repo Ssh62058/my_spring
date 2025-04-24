@@ -33,7 +33,7 @@
 
 <!-- アップロードパス設定 -->
 <beans:bean class="java.lang.String" id="uploadPath">
-<beans:constructor-arg value="C:\dev_ssh2\workplace\port\shop\src\main\webapp\resources"/>
+<beans:constructor-arg value="C:\GitHub\my_spring\port\shop\src\main\webapp\resources"/>
 </beans:bean>
 
 <!-- 一般ファイルアップロードパス -->
@@ -45,18 +45,5 @@
 <resources location="/resources/ckUpload/" mapping="/ckUpload/**"/>	
 <!-- イメージパス設定 -->
 <resources location="/resources/images/" mapping="/images/**"/>	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 </beans:beans>

@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <!-- JSTLのcoreタグライブラリを使用 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> <!-- JSTLのフォーマットタグライブラリを使用 -->
+<jsp:include page="../../include/header.jsp" /> <!-- ヘッダー部分をインクルード -->
+
+<div class="container-fluid container-fluid bg-gradient-primary min-vh-100"> <!-- 背景がグラデーションのコンテナ -->
+	<div class="row">
+		<div class="col-md-3 mt-5 pt-5">
+		<jsp:include page="../include/lnb.jsp" /> <!-- サイドメニュー部分をインクルード -->
+		</div>	
+			<div class="col-md-9 mt-5 pt-5">
+				<c:forEach items="${orderView}" var="orderView" varStatus="status"> <!-- 注文情報をループして表示 -->
+					<c:if test="${status.first}"> <!-- 最初の注文情報だけ表示 -->
+						<pre>
+		<span class="fw-bold">注文者</span>		${orderView.userId}	<!-- 注文者のID -->
+		<span class="fw-bold">受取人</span>		${orderView.orderRec}	<!-- 受取人名 -->
+		<span class="fw-bold">住所</span>		(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3} <!-- 配送先住所 -->
+		<span class="fw-bold">価格</span>		<fmt:formatNumber pattern="###,###,###" value="${orderView.amount}"/> <!-- 注文価格をフォーマットして表示 -->
+		<span class="fw-bold">状態</span>		${orderView.delivery} <!-- 配送状態 -->
+						</pre>
+						<div class="">
+							<form role="form" method="post" class="deliveryForm" autocomplete="off" name="form"> <!-- 配送状態の更新フォーム -->
+								<input type="hidden" name="orderId" value="${orderView.orderId}"/> <!-- 注文IDを隠しフィールドとして設定 -->
+								<input type="hidden" name="delivery" value=""/>
+								<div class="d-flex justify-content-end">
+									<button type="button" class="delivery1_btn btn btn-primary">配送中</button> <!-- 配送中状態に変更するボタン -->
+									<button type="button" class="delivery2_btn btn btn-success">配送完了</button> <!-- 配送完了状態に変更するボタン -->
+								</div>
+							</form>
+							</c:if>
+							</c:forEach>
+							<h2>注文詳細</h2> <!-- 注文詳細セクションタイトル -->
+							<hr color="black" style="width:120px; border: 1px solid;"/> <!-- セクション区切り線 -->
+							<ul class="orderView bg-white list-group"> <!-- 注文詳細リスト -->
+							<table class="table table-dark table-hover"> <!-- 注文詳細テーブル -->
+							<colgroup> <!-- 列幅設定 -->
+							<col width="20%"/>
+							<col width="80%"/>
+							</colgroup>
+							<thead class="text-center">
+							<tr>
+							<th>IMAGE</th><th>CONTENTS</th> <!-- テーブルヘッダー -->
+							</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${orderView}" var="orderView"> <!-- 商品情報をループして表示 -->
+								<tr>
+								<td>
+								<li class="list-group-item">
+								<div class="">
+								<img src="${orderView.gdsThumbImg}" class="img-thumbnail"/> <!-- 商品のサムネイル画像 -->
+								</div>
+								</td>
+								<td>
+								<pre>
+		<span class="fw-bold">商品名</span>			${orderView.gdsName}	<!-- 商品名 -->
+		<span class="fw-bold">単価</span>			<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice}"/> 円 <!-- 商品単価 -->
+		<span class="fw-bold">個数</span>			${orderView.cartStock} 個 <!-- 商品の数量 -->
+		<span class="fw-bold">価格</span>			<fmt:formatNumber pattern="###,###,###" value="${orderView.gdsPrice * orderView.cartStock}"/> 円 <!-- 商品の合計価格 -->
+								</pre>
+								</li>
+								</td>
+								</tr>
+								</c:forEach>
+								</tbody>
+								</table>
+							</ul>
+						</div>
+					
+				<script src="resources/js/delivery.js"> <!-- 配送状態のボタン操作用スクリプト -->
+				</script>
+			</div>
+		</div>
+	</div>
+
+<jsp:include page"../../include/footer.jsp" /> <!-- フッター部分をインクルード -->

@@ -4,16 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.my.shop.mappers.adminMapper">
 
-<!-- カテゴリ取得 -->
+<!-- カテゴリの階層構造を取得 -->
 <select id="category" resultType="com.my.shop.vo.CategoryVO">
 <![CDATA[
 select
 level, cateName, cateCode, cateCodeRef
 from goods_category
-start with cateCodeRef is null connect by prior cateCode = cateCodeRef
+start with cateCodeRef is null
+connect by prior cateCode = cateCodeRef
 ]]>
 </select>
 
+<!-- 商品登録 -->
 <insert id="register" parameterType="com.my.shop.vo.GoodsVO">
 <![CDATA[
 insert into tbl_goods(gdsNum, gdsName, cateCode, gdsPrice, gdsStock, gdsDes, gdsImg, gdsThumbImg)
@@ -22,7 +24,7 @@ values
 ]]>
 </insert>
 
-<!-- 商品リスト -->
+<!-- 商品リストを取得 -->
 <select id="goodslist" resultType="com.my.shop.vo.GoodsVO">
 <![CDATA[
 select
@@ -32,6 +34,7 @@ order by gdsNum desc
 ]]>
 </select>
 
+<!-- 商品詳細を取得 -->
 <select id="goodsView" resultType="com.my.shop.vo.GoodsViewVO">
 <![CDATA[
 select
@@ -44,27 +47,31 @@ where g.gdsNum = #{gdsNum}
 ]]>
 </select>
 
+<!-- 商品情報を更新 -->
 <update id="goodsModify">
 <![CDATA[
 update tbl_goods
 set
-gdsName = #{gdsName}, cateCode=#{cateCode}, gdsPrice = #{gdsPrice}, gdsStock=#{gdsStock}, gdsDes=#{gdsDes}, gdsImg=#{gdsImg}, gdsThumbImg=#{gdsThumbImg}
+gdsName = #{gdsName}, cateCode = #{cateCode}, gdsPrice = #{gdsPrice}, gdsStock = #{gdsStock}, gdsDes = #{gdsDes}, gdsImg = #{gdsImg}, gdsThumbImg = #{gdsThumbImg}
 where gdsNum = ${gdsNum}
 ]]>
 </update>
 
+<!-- 商品を削除 -->
 <delete id="goodsDelete">
 <![CDATA[
-delete tbl_goods where gdsNum = #{gdsNum}
+delete from tbl_goods where gdsNum = #{gdsNum}
 ]]>
 </delete>
 
+<!-- カートに商品を追加 -->
 <insert id="addCart">
 <![CDATA[
 insert into tbl_cart (cartNum, userId, gdsNum, cartStock) values (seq_tbl_cart.nextval, #{userId}, #{gdsNum}, #{cartStock})
 ]]>
 </insert>
 
+<!-- カートリストを取得 -->
 <select id="cartList" resultType="com.my.shop.vo.CartListVO">
 <![CDATA[
 select 
@@ -78,6 +85,7 @@ where c.userId = #{userId}
 ]]>
 </select>
 
+<!-- 注文リストを取得 -->
 <select id="orderList" resultType="com.my.shop.vo.OrderVO">
 <![CDATA[
 select
@@ -86,6 +94,7 @@ from tbl_order
 ]]>
 </select>
 
+<!-- 注文詳細を取得 -->
 <select id="orderView" resultType="com.my.shop.vo.OrderListVO">
 <![CDATA[
 select
@@ -101,6 +110,7 @@ where o.orderId = #{orderId}
 ]]>
 </select>
 
+<!-- 配送ステータスを更新 -->
 <update id="delivery">
 <![CDATA[
 update tbl_order 
@@ -109,6 +119,7 @@ where orderId = #{orderId}
 ]]>
 </update>
 
+<!-- 商品の在庫数を変更 -->
 <update id="changeStock">
 <![CDATA[
 update tbl_goods 
@@ -117,6 +128,7 @@ where gdsNum = #{gdsNum}
 ]]>
 </update>
 
+<!-- 全てのコメントを取得 -->
 <select id="allReply" resultType="com.my.shop.vo.ReplyListVO">
 <![CDATA[
 select
@@ -128,12 +140,14 @@ on r.userId = m.userId
 ]]>
 </select>
 
+<!-- コメントを削除 -->
 <delete id="deleteReply">
 <![CDATA[
-delete tbl_reply where repNum = #{repNum}
+delete from tbl_reply where repNum = #{repNum}
 ]]>
 </delete>
 
+<!-- 会員リストを取得 -->
 <select id="memberList" resultType="com.my.shop.vo.MemberVO">
 <![CDATA[
 select userId, userPass, userPassRe, userName, userPhone, userEmail, userGender, userAddr1, userAddr2, userAddr3, verify, regiDate
@@ -142,22 +156,4 @@ tbl_member
 ]]>
 </select>
 
-<!-- 
-Join : 複数のテーブルで関連する列を基準に行を結合する際に使用
-内部結合[INNER JOIN] : 両方のテーブルで一致する値を持つレコードを選択
-on g.cateCode = c.cateCode : gテーブルとcテーブルの値が一致する場合、両方のテーブルのデータを結合
-
-左結合[LEFT JOIN] : 左側のテーブルのすべてのレコードと、右側のテーブルの一致するレコードを返す
-右結合[RIGHT JOIN]: 右側のテーブルのすべてのレコードと、左側の一致するレコードを返す
-全体結合[FULL]: 左右のテーブルのすべてのレコードを一致する場合に返す
-自己結合[self]: テーブルが自己自身と結合されます
-
-エイリアス tbl_goods.gdsNum : 簡単なエイリアス g.gdsNum
- -->
-
 </mapper>
-
-<!-- 
-start with cateCodeRef is null => 階層構造の開始点
-connect by prior cateCode = cateCodeRef => 親カテゴリが前のレベル(現在のカテゴリ)と一致しているかを再帰的に検索
- -->

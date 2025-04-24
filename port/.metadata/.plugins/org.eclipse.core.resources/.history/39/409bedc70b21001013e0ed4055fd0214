@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.shop.mappers.adminMapper">
+
+<!-- カテゴリの階層構造を取得 -->
+<select id="category" resultType="com.my.shop.vo.CategoryVO">
+select
+level, cateName, cateCode, cateCodeRef
+from goods_category
+start with cateCodeRef is null -- 親カテゴリが存在しない場合を開始点とする
+connect by prior cateCode = cateCodeRef -- 現在のカテゴリと親カテゴリを再帰的に結合
+</select>
+
+<!-- 商品登録 -->
+<insert id="register" parameterType="com.my.shop.vo.GoodsVO">
+insert into tbl_goods(gdsNum, gdsName, cateCode, gdsPrice, gdsStock, gdsDes, gdsImg, gdsThumbImg)
+values
+(seq_gdsNum.nextval, #{gdsName}, #{cateCode}, #{gdsPrice}, #{gdsStock}, #{gdsDes}, #{gdsImg}, #{gdsThumbImg})
+</insert>
+
+<!-- 商品リストを取得 -->
+<select id="goodslist" resultType="com.my.shop.vo.GoodsVO">
+select
+gdsNum, gdsName, cateCode, gdsPrice, gdsStock, gdsDes, gdsImg, gdsThumbImg, gdsDate
+from tbl_goods
+order by gdsNum desc -- 商品番号の降順で取得
+</select>
+
+<!-- 商品詳細を取得 -->
+<select id="goodsView" resultType="com.my.shop.vo.GoodsViewVO">
+select
+g.gdsNum, g.gdsName, g.cateCode, c.cateCodeRef, c.cateName, gdsPrice, gdsStock, gdsDes, gdsImg, gdsDate,
+g.gdsImg, g.gdsThumbImg
+from tbl_goods g
+inner join goods_category c
+on g.cateCode = c.cateCode -- 商品のカテゴリコードとカテゴリテーブルを結合
+where g.gdsNum = #{gdsNum}
+</select>
+
+<!-- 商品情報を更新 -->
+<update id="goodsModify">
+update tbl_goods
+set
+gdsName = #{gdsName}, cateCode = #{cateCode}, gdsPrice = #{gdsPrice}, gdsStock = #{gdsStock}, gdsDes = #{gdsDes}, gdsImg = #{gdsImg}, gdsThumbImg = #{gdsThumbImg}
+where gdsNum = ${gdsNum}
+</update>
+
+<!-- 商品を削除 -->
+<delete id="goodsDelete">
+delete from tbl_goods where gdsNum = #{gdsNum}
+</delete>
+
+<!-- カートに商品を追加 -->
+<insert id="addCart">
+insert into tbl_cart (cartNum, userId, gdsNum, cartStock) values (seq_tbl_cart.nextval, #{userId}, #{gdsNum}, #{cartStock})
+</insert>
+
+<!-- カートリストを取得 -->
+<select id="cartList" resultType="com.my.shop.vo.CartListVO">
+select 
+row_number() over(order by c.cartNum desc) as num, -- カート番号の降順で番号を生成
+c.cartNum, c.userId, c.gdsNum, c.cartStock, g.addDate,
+g.gdsName, g.gdsPrice, g.gdsThumbImg
+from tbl_cart c
+inner join tbl_goods g
+on c.gdsNum = g.gdsNum -- カートの商品の詳細情報を結合
+where c.userId = #{userId}
+</select>
+
+<!-- 注文リストを取得 -->
+<select id="orderList" resultType="com.my.shop.vo.OrderVO">
+select
+orderId, userId, orderRec, userAddr1, userAddr2, userAddr3, orderPhone, amount, orderDate, delivery
+from tbl_order
+</select>
+
+<!-- 注文詳細を取得 -->
+<select id="orderView" resultType="com.my.shop.vo.OrderListVO">
+select
+o.orderId, o.userId, o.orderRec, o.userAddr1, o.userAddr2, o.userAddr3, o.orderPhone, o.amount, o.orderDate, o.delivery,
+d.orderDetailsNum, d.gdsNum, d.cartStock,
+g.gdsName, g.gdsThumbImg, g.gdsPrice
+from tbl_order o
+inner join tbl_order_details d
+on o.orderId = d.orderId -- 注文と注文詳細を結合
+inner join tbl_goods g
+on d.gdsNum = g.gdsNum -- 注文詳細と商品情報を結合
+where o.orderId = #{orderId}
+</select>
+
+<!-- 配送ステータスを更新 -->
+<update id="delivery">
+update tbl_order 
+set delivery = #{delivery} 
+where orderId = #{orderId}
+</update>
+
+<!-- 商品の在庫数を変更 -->
+<update id="changeStock">
+update tbl_goods 
+set gdsStock = gdsStock - #{gdsStock}
+where gdsNum = #{gdsNum}
+</update>
+
+<!-- 全てのコメントを取得 -->
+<select id="allReply" resultType="com.my.shop.vo.ReplyListVO">
+select
+r.gdsNum, r.userId, r.repNum, r.repCon, r.repDate,
+m.userName
+from tbl_reply r
+inner join tbl_member m
+on r.userId = m.userId -- コメントとユーザー情報を結合
+</select>
+
+<!-- コメントを削除 -->
+<delete id="deleteReply">
+delete from tbl_reply where repNum = #{repNum}
+</delete>
+
+<!-- 会員リストを取得 -->
+<select id="memberList" resultType="com.my.shop.vo.MemberVO">
+select userId, userPass, userPassRe, userName, userPhone, userEmail, userGender, userAddr1, userAddr2, userAddr3, verify, regiDate
+from
+tbl_member
+</select>
+
+</mapper>
