@@ -45,11 +45,6 @@ function replyList(){
 	});
 	}
 
-
-
-
-
-
 </script>
 <script src="${contextPath}/resources/js/replylist.js"></script>
 </head>
@@ -65,7 +60,6 @@ function replyList(){
 <!-- ログイン・会員登録の変数、ログインした場合としない場合-->
 <div class="collapse navbar-collapse" id="mynavbar">
 <ul class="navbar-nav me-auto align-items-center">
-
 	
 	<c:if test = "${member == null }"><!-- ログインしないと -->
 		<li class="nav-item">
@@ -80,7 +74,6 @@ function replyList(){
 		</a> 
 		</li>
 
- 
 	</c:if>
 	<!--ログインした時 -->
 	<c:if test="${member != null }">
@@ -270,12 +263,6 @@ function replyList(){
 		</c:if>
 	</c:if>
 
-       
-
-        
-
-        
-
 </ul>
 <form class="d-flex ">
 
@@ -286,12 +273,6 @@ function replyList(){
 </button>
 </div>
 
-
-                    
-
-
-
-
 </div>
 </form>
 </div>
@@ -300,14 +281,3 @@ function replyList(){
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
 <script src="${contextPath}/resources/js/daum.js"></script>
-
-
-
-
-
-
-
-
-
-
-

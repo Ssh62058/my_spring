@@ -1,0 +1,238 @@
+package com.my.shop.controller;
+
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.my.shop.service.ShopService;
+import com.my.shop.vo.CartListVO;
+import com.my.shop.vo.CartVO;
+import com.my.shop.vo.GoodsViewVO;
+import com.my.shop.vo.MemberVO;
+import com.my.shop.vo.OrderDetailVO;
+import com.my.shop.vo.OrderListVO;
+import com.my.shop.vo.OrderVO;
+import com.my.shop.vo.ReplyListVO;
+import com.my.shop.vo.ReplyVO;
+
+@Controller
+@RequestMapping("/shop/*")
+public class ShopController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
+	
+	@Inject
+	ShopService service;
+
+
+	
+	//카테고리별 상품 리스트
+	@GetMapping("/list")
+	public void getList(@RequestParam("c") int cateCode, @RequestParam("l") int level, Model model)throws Exception{
+		logger.info("카테고리별 페이지 진입");
+		List<GoodsViewVO> list = null;
+		list = service.list(cateCode, level);
+		model.addAttribute("list",list);
+	}
+	
+	//상품 조회
+	@GetMapping("/view")
+	public void getView(@RequestParam("n") int gdsNum, Model model) throws Exception{
+		logger.info("get view");
+		
+		GoodsViewVO view = service.goodsView(gdsNum);
+		model.addAttribute("view",view);
+	}
+	
+	//댓글 등록
+	//유저가 작성한 댓글 내용과 게시글 정보를 함께 전달
+	@ResponseBody
+	@PostMapping(value="/view/registReply")
+	public void registReply(ReplyVO reply, HttpSession session)throws Exception{
+		logger.info("regist reply");
+		//로그인 세션(웹에서 사용자 정보를 저장하는 세션 uri)
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		reply.setUserId(member.getUserId());
+		//컨트롤 서비스 로직
+		//public void registReply(ReplyVO reply)throws Exception;
+		service.registReply(reply);//비즈니스 로직에서 정의된 객체 클래스와 클래스 사이를 연결하는 과정을 설명한 내용
+		//서비스에서 정의되지 않은 데이터가 없는 작업 절차를 추가하여 버튼 클릭 시 실행
+	}
+//댓글 리스트 로직에서 결과를 사용하는 3가지 상태 (list, read, 0= 오류, 1= 성공, -1= 실패)
+	@ResponseBody
+	@GetMapping(value="/view/replyList")
+public List<ReplyListVO> getReplyList(@RequestParam("n") int gdsNum) throws Exception{
+		logger.info("由ы뵆 由ъ뒪�듃 吏꾩엯");
+List<ReplyListVO> reply = service.replyList(gdsNum);
+return reply;
+	}
+	
+	//댓글 삭제는 로그인한 사용자 ID와 작성된 ID가 일치하지 않으면 삭제 처리가 되지 않는다.
+	@ResponseBody
+	@PostMapping(value="/view/deleteReply")
+public int getReplyList(ReplyVO reply, HttpSession session) throws Exception{
+//정확한 확인을 위해 필요한 변수
+int result = 0; 
+
+MemberVO member = (MemberVO)session.getAttribute("member");
+//댓글을 작성한 사용자의 아이디를 가져옵니다.
+String userId = service.idCheck(reply.getRepNum()); //현재 접속한 ID와 댓글을 작성한 ID를 비교합니다.
+
+//아이디 검증
+if(member.getUserId().equals(userId)) {//로그인한 아이디가 작성한 아이디와 같다면
+	
+	reply.setUserId(member.getUserId());//reply에 userId를 설정
+	service.deleteReply(reply);//컨트롤러의 메서드 실행
+	
+	result = 1;//성공(Success)
+}
+//하나만 oneway ,option
+return result; //아이디가 일치하지 않으면 삭제 처리가 되지 않는다.
+	}
+	
+	//아이디 체크
+//댓글 수정
+	@ResponseBody
+	@PostMapping(value="/view/modifyReply")	
+public int modifyReply(ReplyVO reply, HttpSession session)throws Exception{
+
+int result = 0;
+MemberVO member = (MemberVO)session.getAttribute("member");
+String userId = service.idCheck(reply.getRepNum());
+
+if(member.getUserId().equals(userId)) {//로그인한 아이디가 작성한 아이디와 같다면
+	
+	reply.setUserId(member.getUserId());//reply에 userId를 설정
+	service.modifyReply(reply);//컨트롤러의 메서드 실행
+	result = 1;//성공(Success)
+}
+return result;		
+	}
+	
+	//카트 추가 RDBMS ORM
+	@ResponseBody
+	@PostMapping("/view/addCart")
+	public void addCart(CartVO cart, HttpSession session)throws Exception{
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		cart.setUserId(member.getUserId());
+		
+		service.addCart(cart);
+	}
+	
+	//카트 목록
+	@GetMapping("/cartList")
+public void getCartList(HttpSession session, Model model) throws Exception {
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String userId = member.getUserId();
+		
+		List<CartListVO> cartList = service.cartList(userId);
+		model.addAttribute("cartList", cartList);
+		
+	}
+	
+	
+	// 카트 삭제
+	@ResponseBody
+	@PostMapping(value = "/deleteCart")
+	public int deleteCart(HttpSession session, @RequestParam(value = "chbox[]") List<String> chArr, CartVO cart) throws Exception {
+		logger.info("delete cart");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String userId = member.getUserId();
+		
+		int result = 0;
+		int cartNum = 0;		
+		
+		// 로그인 여부 구분
+		if(member != null) {
+			cart.setUserId(userId);
+			
+			for(String i : chArr) {  // 에이젝스에서 받은 chArr의 갯수만큼 반복
+				cartNum = Integer.parseInt(i);  // i번째 데이터를 cartNum에 저장
+				cart.setCartNum(cartNum);
+				service.deleteCart(cart);
+			}			
+			result = 1;
+		}		
+		return result;		
+	}
+	
+	//주문
+	@PostMapping(value="/cartList")
+	public String order(HttpSession session, OrderVO order, OrderDetailVO orderDetail) throws Exception{
+		logger.info("C Ba");
+		// 캘린더 호출
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String userId = member.getUserId();
+		
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR); // 년
+		String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH+1));
+		String ymd = ym + new DecimalFormat("00").format(cal.get(Calendar.DATE));
+		String subNum = ""; // 랜덤 숫자를 저장하는 문자열 변수
+		
+		for(int i=1; i<=6;i++) {
+			subNum += (int)(Math.random() * 10); // 0~9까지의 숫자를 생성해서 subNum 에 저장
+		}
+		
+		String orderId = ymd + "_"+ subNum; //[연월일]+랜덤6숫자 로 구성된 문자열
+		
+		order.setOrderId(orderId);
+		order.setUserId(userId);
+		
+		service.orderInfo(order);
+		orderDetail.setOrderId(orderId);
+		service.orderInfo_Details(orderDetail);
+		
+		
+		//주문 테이블 , 주문 상세 테이블에 데이터를 전송하고 카트 비우기
+		service.cartAllDelete(userId);
+		
+		return "redirect:/shop/orderList";
+	}
+	
+	//주문 목록
+	@GetMapping(value="/orderList")
+	public void getOrderList(HttpSession session, OrderVO order,Model model) throws Exception{
+		logger.info("오 더 리 스 트");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String userId = member.getUserId();
+		
+		order.setUserId(userId);
+		List<OrderVO> orderList = service.orderList(order);
+		model.addAttribute("orderList",orderList);
+	}
+	
+	//주문 상세 목록 pk를 기준으로 글의 순번이 다르기 때문에
+	@GetMapping(value="/orderView")
+	public void getOrderView(HttpSession session, @RequestParam("n") String orderId, OrderVO order, Model model) throws Exception{
+		logger.info("get order 뷰");
+		
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String userId = member.getUserId();
+		
+		order.setUserId(userId);
+		order.setOrderId(orderId);
+		
+		List<OrderListVO> orderView = service.orderView(order);
+		model.addAttribute("orderView",orderView);
+	}
+
+	
+	
+}

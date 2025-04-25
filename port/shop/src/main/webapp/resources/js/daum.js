@@ -1,41 +1,46 @@
-function go_daum_address(){
-	
-	new daum.Postcode({//팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분
-		oncomplete: function(data) {
-	var addr = '';//주소변수
-	var extraAddr ='';//참고항목 변수
-	
-	//사용자가 선택한 주소 타입에 따라 해당 주소값을 가져온다
-	if(data.userSelectedType === 'R'){//사용자가 도로명 주소를 선택했을 경우
-	addr = data.roadAddress;
-	}else{//사용자가 지번 주소를 선택했을 경우(J)
-	addr = data.jibunAddress;	
-	}
-	//사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다
-	if(data.userSelectedType === 'R'){
-	//법정동명이 있을 경우 추가한다(법정리는 제외)
-	//법정동의 경우 마지막 문자가 "동/로/가"로 끝난다
-	if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-		extraAddr += data.bname;
-	}
-	// 건물명이 있고 , 공동 주택일 경우 추가한다
-	if(data.buildingName !== '' && data.apartment === 'Y'){
-		extraAddr += (extraAddr !== '' ? ', '+data.buildingName : data.buildingName);
-	}	
-	//표시할 참고항목이 있을 경우 괄호까지 추가한 최종 문자열을 만든다
-	if(extraAddr !== ''){
-		extraAddr = '('+ extraAddr +')';
-	}
-	addr += extraAddr;
-	}else{
-		addr += ' ';
-	}	
-	//우편번호와 주소정보를 해당 필드에 넣는다
-	$(".address_input_1").val(data.zonecode);
-	$(".address_input_2").val(addr);
-	//주소가 선택되고 주소에 나머지 내용을 적기위해 인풋3번에 속성에 읽기전용을 거짓을 만든다
-	$(".address_input_3").attr("readonly",false);	
-	$(".address_input_3").focus();			
-		}
-	}).open();
+function go_daum_address() { // Daumの住所検索機能を使用する
+
+    new daum.Postcode({ // ポップアップで検索結果の項目をクリックした際に実行するコード
+        oncomplete: function(data) {
+            var addr = ''; // 住所変数
+            var extraAddr = ''; // 補足項目変数
+            
+            // ユーザーが選択した住所タイプに応じて該当する住所を取得
+            if (data.userSelectedType === 'R') { // ユーザーが道路名住所を選択した場合
+                addr = data.roadAddress;
+            } else { // ユーザーが地番住所を選択した場合(J)
+                addr = data.jibunAddress;    
+            }
+
+            // ユーザーが選択した住所が道路名タイプの場合、補足項目を結合
+            if (data.userSelectedType === 'R') {
+                // 法定洞名がある場合、追加（法定里は除外）
+                // 法定洞は最後の文字が"洞/路/街"で終わる
+                if (data.bname !== '' && /[洞|路|街]$/g.test(data.bname)) {
+                    extraAddr += data.bname;
+                }
+
+                // 建物名があり、共同住宅の場合は追加
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }    
+
+                // 表示する補足項目がある場合、括弧を付けた最終文字列を作成
+                if (extraAddr !== '') {
+                    extraAddr = '(' + extraAddr + ')';
+                }
+                addr += extraAddr;
+            } else {
+                addr += ' ';
+            }    
+
+            // 郵便番号と住所情報を該当フィールドに設定
+            $(".address_input_1").val(data.zonecode); // 郵便番号
+            $(".address_input_2").val(addr); // 住所
+            
+            // 住所が選択された後、残りの内容を入力するためにinput_3の読み取り専用属性を解除
+            $(".address_input_3").attr("readonly", false);    
+            $(".address_input_3").focus(); // フォーカスを設定                
+        }
+    }).open();
 }

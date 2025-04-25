@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/my/shop/controller/ShopController.java=UTF-8
+encoding//src/main/java/com/my/shop/persistence/ShopDAO.java=UTF-8
+encoding//src/main/java/com/my/shop/persistence/ShopDAOImpl.java=UTF-8
+encoding//src/main/java/com/my/shop/service/ShopService.java=UTF-8
+encoding//src/main/java/com/my/shop/service/ShopServiceImpl.java=UTF-8

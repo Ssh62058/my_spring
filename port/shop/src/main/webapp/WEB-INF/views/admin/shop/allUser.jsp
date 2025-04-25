@@ -2,17 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="../../include/header.jsp" />
+<jsp:include page="../../include/header.jsp" /> <!-- ヘッダー部分をインクルード -->
 
-<div class="container-fluid bg-gradient-primary min-vh-100 mt-5">
+<div class="container-fluid bg-gradient-primary min-vh-100 mt-5"> <!-- 背景がグラデーションのコンテナ -->
 	<div class="row">
 		<div class="col-md-3 pt-5">
-<jsp:include page="../include/lnb.jsp" />		
+			<jsp:include page="../include/lnb.jsp" /> <!-- サイドメニュー部分をインクルード -->
 		</div>
 		<div class="col-md-9 pt-5">
-			<h2 class="text-white fw-bold">회원목록</h2>
-			<table class="table table-hover">
-				<colgroup>
+			<h2 class="text-white fw-bold">会員一覧</h2> <!-- 会員一覧タイトル -->
+			<table class="table table-hover"> <!-- 会員情報を表示するテーブル -->
+				<colgroup> <!-- 列幅の設定 -->
 					<col style="width:11.11%"/>
 					<col style="width:11.11%"/>
 					<col style="width:11.11%"/>
@@ -24,31 +24,32 @@
 					<col style="width:11.11%"/>
 					<col style="width:11.11%"/>
 				</colgroup>
-				<thead>
+				<thead> <!-- テーブルヘッダー -->
 					<tr>
-					<th>유 저 아 이 디</th>
-					<th>이 름</th>
-					<th>유 저 이 메 일</th>
-					<th>전 화 번 호</th>
-					<th>주 소 1</th>
-					<th>주 소 2</th>
-					<th>주 소 3</th>
-					<th>가 입 일</th>
-					<th>회 원 등 급</th>
+					<th>ユーザーID</th> <!-- ユーザーID列 -->
+					<th>名前</th> <!-- 名前列 -->
+					<th>ユーザーのメールアドレス</th> <!-- メールアドレス列 -->
+					<th>電話番号</th> <!-- 電話番号列 -->
+					<th>住所1</th> <!-- 住所1列 -->
+					<th>住所2</th> <!-- 住所2列 -->
+					<th>住所3</th> <!-- 住所3列 -->
+					<th>登録日</th> <!-- 登録日列 -->
+					<th>会員グレード</th> <!-- 会員グレード列 -->
 					</tr>
 				</thead>
-				<tbody>
-					<c:forEach items="${memberList}" var="memberList">
+				<tbody> <!-- テーブルボディ -->
+					<c:forEach items="${memberList}" var="memberList"> <!-- 会員情報をループして表示 -->
 					<tr>
-					<td>${memberList.userId }</td>
-					<td>${memberList.userName }</td>
-					<td>${memberList.userEmail }</td>
-					<td>${memberList.userPhone }</td>
-					<td>${memberList.userAddr1 }</td>
-					<td>${memberList.userAddr2 }</td>
-					<td>${memberList.userAddr3 }</td>
-					<td>${memberList.regiDate }</td>
-					<td>${memberList.verify }</td>
+					<td>${memberList.userId }</td> <!-- ユーザーID -->
+					<td>${memberList.userName }</td> <!-- 名前 -->
+					<td>${memberList.userEmail }</td> <!-- メールアドレス -->
+					<td>${memberList.userPhone }</td> <!-- 電話番号 -->
+					<td>${memberList.userAddr1 }</td> <!-- 住所1 -->
+					<td>${memberList.userAddr2 }</td> <!-- 住所2 -->
+					<td>${memberList.userAddr3 }</td> <!-- 住所3 -->
+					<td>${memberList.regiDate }</td> <!-- 登録日 -->
+					<c:if test="${memberList.verify==9}"><td>管理者</td></c:if> <!-- 管理者の場合 -->
+					<c:if test="${memberList.verify==0}"><td>一般客</td></c:if> <!-- 一般客の場合 -->
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -57,4 +58,4 @@
 	</div>
 </div>
 
-<jsp:include page="../../include/footer.jsp" />
+<jsp:include page="../../include/footer.jsp" /> <!-- フッター部分をインクルード -->

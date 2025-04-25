@@ -1,100 +1,101 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<jsp:include page="../include/header.jsp" />
+    pageEncoding="UTF-8"%> <!-- JSPページの基本設定 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <!-- JSTLコアタグライブラリ -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <!-- JSTLフォーマットタグライブラリ -->
+<jsp:include page="../include/header.jsp" /> <!-- ヘッダーのインクルード -->
 
-<div class="container-fluid min-vh-100">
+<div class="container-fluid min-vh-100"> <!-- メインコンテンツ全体を覆うコンテナ -->
 	<div class="row">
 		<div class="col-md-2 mt-5 pt-5 pb-5">
-<jsp:include page="../include/aside.jsp" />		
+<jsp:include page="../include/aside.jsp" />		 <!-- サイドバーのインクルード -->
 		</div>
 		<div class="col-md-1 d-flex">
-		<div class="vr"></div>
+		<div class="vr"></div> <!-- 垂直区切り線 -->
 	    </div>
-<div class="col-md-9 mt-5 pt-5 pb-5">
+<div class="col-md-9 mt-5 pt-5 pb-5"> <!-- メイン表示領域 -->
 
-<div class="">
-<jsp:include page="../include/breadcrumbs.jsp"/>
+<div class="">  
+<jsp:include page="../include/breadcrumbs.jsp"/> <!-- パンくずリストのインクルード -->
 </div>
 
 <form role="form">
 <input type="hidden" name="gdsNum" value="${view.gdsNum}"/>
-<!-- 익스프레션 자바 표현식 el 익스프레션 랭귀지 -->
+<!-- エクスプレッション、Java表現式 (EL) を利用して商品番号を保持 -->
 </form>
 
 <div class="my-3">
-<img src="${view.gdsImg}" class="img-thumbnail"/>
+<img src="${view.gdsImg}" class="img-thumbnail"/> <!-- 商品画像の表示 -->
 </div>
 
 <div class="my-3">
-	<label class="form-label">상품명</label>
-	<span class="mx-3">${view.gdsName}</span>
+	<label class="form-label">商品名</label>
+	<span class="mx-3">${view.gdsName}</span> <!-- 商品名の表示 -->
 </div>
 
 <div class="my-3">
-	<label class="form-label">카테고리</label>
-	<span class="mx-3">${view.cateName}</span>
+	<label class="form-label">カテゴリ</label>
+	<span class="mx-3">${view.cateName}</span> <!-- 商品カテゴリーの表示 -->
 </div>
 
 <div class="my-3">
-<label class="form-label">가격</label>
-<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsPrice}"/>원</span>
+<label class="form-label">価格</label>
+<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsPrice}"/>円</span> <!-- 価格の表示 -->
 </div>
 
 <div class="my-3">
-<label class="form-label">상품수량</label>
-<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsStock}"/>EA</span>
+<label class="form-label">商品数量</label>
+<span class="mx-3"><fmt:formatNumber pattern="###,###,###" value="${view.gdsStock}"/>EA</span> <!-- 在庫数量の表示 -->
 </div>
 
 <c:if test="${view.gdsStock != 0 }">
-<span>구입 수량</span>
+<!-- 在庫がある場合、購入数量のコントロールを表示 -->
+<span>購入数量</span>
 <div class="d-flex w-25">
 <button type="button" class="plus btn btn-light">+</button>
 <input type="number" class="numBox form-control text-center" min="1" max="${view.gdsStock}" value="1" readonly="readonly"/>
  <button type="button" class="minus btn btn-light">-</button>
 </div>
 <input type="hidden" value="${view.gdsStock }"/>
-<script src="/resources/js/stockBtn.js"></script>
+<script src="/resources/js/stockBtn.js"></script> <!-- 在庫操作用スクリプト -->
 </c:if>
 
-<!-- 장바구니에 담기 -->
+<!-- カートに入れるボタン -->
 <div class="my-3">
 <button type="button" class="addCart_btn btn btn-outline-success">
-카트에 담기
+カートに入れる
 </button>
-<script src="/resources/js/cart.js"></script>
+<script src="/resources/js/cart.js"></script> <!-- カート操作用スクリプト -->
 </div>
 <c:if test="${view.gdsStock == 0 }">
-<p>상품 수량이 부족합니다</p>
+<p>商品数量が不足しています。</p> <!-- 在庫切れの表示 -->
 </c:if>
 
 <div class="my-3">
-<label class="form-label">상품설명</label>
-<span class="mx-3">${view.gdsDes}</span>
+<label class="form-label">商品説明</label>
+<span class="mx-3">${view.gdsDes}</span> <!-- 商品説明の表示 -->
 </div>
 
 <div id="reply">
 <c:if test="${member == null}">
-	<p>상품평을 남기시려면 <a href="/member/signin">로그인</a>해주세요</p>
+    <p>商品レビューを残すには<a href="/member/signin">ログイン</a>してください。</p> <!-- 未ログイン時のレビュー投稿促進メッセージ -->
 </c:if>
 
-<c:if test="${member != null}"><!-- 로그인을 하면 댓글을 사용 -->
+<c:if test="${member != null}"><!-- ログイン状態ならレビュー投稿フォームを表示 -->
 <section class="replyForm">
-<!-- 히든으로 제품번호가 들어가야됨 -->
+<!-- 隠しフィールドに商品番号を設定 -->
 <form role="form" method="post" autocomplete="off">
 
 <input type="hidden" name="gdsNum" id="gdsNum" value="${view.gdsNum}">
-<!-- 댓글쓰기 -->
+<!-- 商品レビューの入力欄 -->
 <div class="my-3">
-<textarea name="repCon" id="repCon" class="form-control">상품평을 남겨주세요</textarea>
+<textarea name="repCon" id="repCon" class="form-control">商品レビューを残してください</textarea>
 </div>
 
 <div class="d-flex justify-content-end">
 <button type="button" id="reply_btn" class="btn btn-outline-primary">
-상품평쓰기
+商品レビューを書く
 </button>
-<script src="/resources/js/reply.js"></script>
+<script src="/resources/js/reply.js"></script> <!-- レビュー投稿用スクリプト -->
 </div>
 
 </form>
@@ -102,60 +103,43 @@
 </c:if>
 
 <section class="replyList">
-<ul class="list-group list-group-flush">
-
+<ul class="list-group list-group-flush"> 
+<!-- 商品レビューリストが表示される -->
 </ul>
 <script>
-replyList();//헤더에서 만들 함수 호출
+replyList();// ヘッダーで定義された関数を呼び出してレビューリストを更新
 </script>
-<!-- 댓글 수정관련 스크립트 -->
-
+<!-- コメント修正関連スクリプト -->
 </section>
 </div>
 
-
-
-	
 		</div>
 	</div>
 </div>
 
-
-<!-- 리플리에 수정창 탑재 -->
+<!-- コメント修正モーダル -->
 <div class="replyModal">
 
 <div class="modalContent">
 
 	<div class="">
-	<textarea class="modal_repCon form-control" name="modal_repCon"></textarea>
+	<textarea class="modal_repCon form-control" name="modal_repCon"></textarea> <!-- レビュー修正用テキストエリア -->
 	</div>
 
 	<div class="d-flex justify-content-end my-2">
 	<button type="button" class="modal_modify_btn btn btn-success mx-2">
-	수정
+	修正
 	</button>
 	<button type="button" class="modal_cancel btn btn-secondary">
-	취소
+	キャンセル
 	</button>
 	</div>
 
 </div>
-<script src="/resources/js/replyDelete.js"></script>
-<script src="/resources/js/replyEdit.js"></script>
+<script src="/resources/js/replyDelete.js"></script> <!-- レビュー削除用スクリプト -->
+<script src="/resources/js/replyEdit.js"></script> <!-- レビュー編集用スクリプト -->
 
-<div class="modalBackground"></div><!-- 검정색 바탕에 투명도 80 -->
+<div class="modalBackground"></div><!-- 黒い背景 (透明度80) -->
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<jsp:include page="../include/footer.jsp" />
+<jsp:include page="../include/footer.jsp" /> <!-- フッターのインクルード -->

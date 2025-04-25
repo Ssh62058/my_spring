@@ -1,86 +1,123 @@
+/* フォント定義 */
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Pretendard-Regular"; /* 使用するフォント名 */
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff"); /* フォントファイルのURLと形式 */
+  font-weight: 400; /* 通常の太さ */
+  font-style: normal; /* ノーマルスタイル */
 }
+
+/* 全体のデフォルトフォント設定 */
 html, html * {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-Regular"; /* すべての要素に定義したフォントを適用 */
   font-weight: 400;
   font-style: normal;
 }
 
+/* クラス .w-5: 幅の設定 */
 html body .w-5 {
   width: 1% !important;
 }
+
+/* 背景グラデーション設定（プライマリ） */
 html body .bg-gradient-primary {
   background-color: #4e73df;
   background-size: cover;
   background-image: linear-gradient(180deg, #f54d8f 10%, #3774ff 100%);
 }
+
+/* 背景グラデーション設定（プライマリ2） */
 html body .bg-gradient-primary2 {
   background-color: #4e73df;
   background-size: cover;
   background-image: linear-gradient(180deg, #f54d8f 10%, #3774ff 100%);
 }
+
+/* overflowを隠すユーティリティ */
 html body .o-hidden {
   overflow: hidden !important;
 }
+
+/* ログイン画面用背景画像 */
 html body .bg-login-image {
   background: url(../images/1.jpg);
   background-position: center;
   background-size: cover;
 }
+
+/* テキストカラーの指定 */
 html body .text-gray-900 {
   color: #3a3b45 !important;
 }
+
+/* ユーザ用フォームコントロールのサイズ・形状 */
 html body .form-control-user {
   font-size: 0.8rem;
   border-radius: 10rem;
   padding: 1.5rem 1rem;
 }
+
+/* 小さい文字サイズ */
 html body .small {
   font-size: 80%;
   font-weight: 400;
 }
+
+/* ユーザ用ボタン設定 */
 html body .btn-user {
   font-size: 0.8rem;
   border-radius: 10rem;
   padding: 0.75rem 1rem;
 }
+
+/* 幅100%のブロック表示 */
 html body .btn-block {
   display: block;
   width: 100%;
 }
+
+/* 会員登録画面用背景画像 */
 html body .bg-register-image {
   background: url("../images/3.jpg");
   background-position: center;
   background-size: cover;
 }
+
+/* Googleログインボタンのスタイル */
 html body .btn-google {
   color: #fff;
   background-color: #ea4335;
 }
+
+/* Facebookログインボタンのスタイル */
 html body .btn-facebook {
   color: #fff;
   background-color: #3b5998;
 }
+
+/* Kakaoログインボタンのスタイル */
 html body .btn-kakao {
   color: #000;
   background-color: #fee500;
 }
+
+/* 幅10%のユーティリティ */
 html body .w-10 {
   width: 10% !important;
 }
+
+/* 幅90%のユーティリティ */
 html body .w-90 {
   width: 90% !important;
 }
+
+/* サムネイル画像のサイズ */
 html body .thumb {
   width: 100px !important;
   max-width: 100%;
   height: 56px !important;
 }
 
+/* ビデオ表示用の設定 */
 #myVideo {
   position: fixed;
   right: 0;
@@ -89,6 +126,7 @@ html body .thumb {
   min-height: 100%;
 }
 
+/* 固定下部コンテンツの設定 */
 .content {
   position: fixed;
   bottom: 0;
@@ -98,20 +136,7 @@ html body .thumb {
   padding: 20px;
 }
 
-/*#myBtn {
-  width: 200px;
-  font-size: 18px;
-  padding: 10px;
-  border: none;
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-}
-
-#myBtn:hover {
-  background: #ddd;
-  color: black;
-}*/
+/* レビュー編集・削除モーダルの設定 */
 .replyModal {
   z-index: 2;
   display: none;
@@ -127,6 +152,7 @@ html body .thumb {
   background-color: #fff;
   border: 2px solid #666;
 }
+/* レビューモーダル内テキストエリアのスタイル */
 .replyModal .modalContent div textarea {
   font-size: 1.15rem;
   padding: 0.8rem;
@@ -134,6 +160,7 @@ html body .thumb {
   height: 200px;
 }
 
+/* モーダル背景の設定（黒い背景、透明度80%） */
 .modalBackground {
   position: fixed;
   top: 0;
@@ -142,4 +169,5 @@ html body .thumb {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 1;
-}/*# sourceMappingURL=style.css.map */
+}
+/*# sourceMappingURL=style.css.map */

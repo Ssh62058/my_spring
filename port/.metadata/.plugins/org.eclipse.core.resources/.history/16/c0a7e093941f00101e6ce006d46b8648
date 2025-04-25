@@ -1,0 +1,139 @@
+package com.my.shop.persistence;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import com.my.shop.vo.CartListVO;
+import com.my.shop.vo.CartVO;
+import com.my.shop.vo.GoodsViewVO;
+import com.my.shop.vo.OrderDetailVO;
+import com.my.shop.vo.OrderListVO;
+import com.my.shop.vo.OrderVO;
+import com.my.shop.vo.ReplyListVO;
+import com.my.shop.vo.ReplyVO;
+
+@Repository
+public class ShopDAOImpl implements ShopDAO {
+	
+	@Inject
+	private SqlSession sql; // SQL 세션을 주입. SQL 쿼리 실행을 위해 사용.
+
+	// 네임스페이스 정의: 데이터 매퍼와의 연결을 위한 경로 설정.
+	private static String namespace = "com.my.shop.mappers.shopMapper";
+
+	@Override
+	// 특정 카테고리 코드와 참조 코드를 사용하여 상품 리스트를 가져옴.
+	public List<GoodsViewVO> list(int cateCode, int cateCodeRef) throws Exception {
+	    HashMap<String, Object> map = new HashMap<>();
+	    // 카테고리 정보를 맵에 추가.
+	    map.put("cateCode", cateCode);
+	    map.put("cateCodeRef", cateCodeRef);
+	    
+	    return sql.selectList(namespace + ".list_1", map);
+	}
+
+	@Override
+	// 단일 카테고리 코드를 사용하여 상품 리스트를 가져옴.
+	public List<GoodsViewVO> list(int cateCode) throws Exception {
+	    return sql.selectList(namespace + ".list_2", cateCode);
+	}
+
+	@Override
+	// 특정 상품 번호를 사용하여 상품 뷰 페이지 데이터를 가져옴.
+	public GoodsViewVO goodsView(int gdsNum) throws Exception {
+	    return sql.selectOne("com.my.shop.mappers.adminMapper" + ".goodsView", gdsNum);
+	}
+
+	// 댓글 등록 처리.
+	@Override
+	public void registReply(ReplyVO reply) throws Exception {
+	    sql.insert(namespace + ".registReply", reply);
+	}
+
+	// 특정 상품 번호에 대한 댓글 리스트를 반환.
+	@Override
+	public List<ReplyListVO> replyList(int gdsNum) throws Exception {
+	    return sql.selectList(namespace + ".replyList", gdsNum);
+	}
+
+	// 댓글 삭제 처리.
+	@Override
+	public void deleteReply(ReplyVO reply) throws Exception {
+	    sql.delete(namespace + ".deleteReply", reply);
+	}
+
+	// 댓글 작성자의 아이디 확인.
+	@Override
+	public String idCheck(int repNum) throws Exception {
+	    return sql.selectOne(namespace + ".replyUserIdCheck", repNum);
+	}
+
+	// 댓글 수정 처리.
+	@Override
+	public void modifyReply(ReplyVO reply) throws Exception {
+	    sql.update(namespace + ".modifyReply", reply);
+	}
+	//SQL과 연동하는 데이터 접근 레이어(Dao), DaoImpl은 설정 역할
+	
+	// 장바구니 항목 추가.
+	@Override
+	public void addCart(CartVO cart) throws Exception {
+	    sql.insert(namespace + ".addCart", cart);
+	}
+
+	// 특정 사용자 ID에 대한 장바구니 리스트 반환.
+	@Override
+	public List<CartListVO> cartList(String userId) throws Exception {
+	    return sql.selectList(namespace + ".cartList", userId);
+	}
+	// 카트 삭제
+	@Override
+	public void deleteCart(CartVO cart) throws Exception {
+		sql.delete(namespace + ".deleteCart", cart);
+	}
+	/*
+	주문리스트 sql 명령을 담아준 레이어
+	1) 장바구니에서 주문한거 리스트로 생성되어 있어야함(세션과 제품과 주문자 이것들 때문에  join사용)
+	2) 변심으로 (주문했던거 부분적으로 삭제하거나 다 주문하거나 다주문하지 않거나)
+	*/
+	@Override
+	public void orderInfo(OrderVO order) throws Exception {
+		sql.insert(namespace + ".orderInfo", order);
+	}
+
+	@Override
+	public void orderInfo_Details(OrderDetailVO orderDetail) throws Exception {
+		sql.insert(namespace + ".orderInfo_Details", orderDetail);		
+	}
+
+	@Override
+	public void cartAllDelete(String userId) throws Exception {
+		sql.delete(namespace + ".cartAllDelete", userId);		
+	}
+	
+
+	@Override//리스트
+	public List<OrderVO> orderList(OrderVO order) throws Exception {
+		return sql.selectList(namespace + ".orderList", order);
+	}
+
+	@Override//view
+	public List<OrderListVO> orderView(OrderVO order) throws Exception {
+		return sql.selectList(namespace + ".orderView", order);
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+
+}

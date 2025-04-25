@@ -2,78 +2,81 @@ package com.my.shop.vo;
 
 import java.sql.Date;
 
+// 注文情報を格納するためのVOクラス
 public class OrderVO {
 
-	private String orderId;
-	private String userId;
-	private String orderRec;
-	private String userAddr1;
-	private String userAddr2;
-	private String userAddr3;
-	private String orderPhone;
-	private int amount;
-	private Date orderDate;
-	
-	private String delivery;
-	
-	public String getDelivery() {
-		return delivery;
-	}
-	public void setDelivery(String delivery) {
-		this.delivery = delivery;
-	}
-	public Date getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-	public int getAmount() {
-		return amount;
-	}
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-	public String getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getOrderRec() {
-		return orderRec;
-	}
-	public void setOrderRec(String orderRec) {
-		this.orderRec = orderRec;
-	}
-	public String getUserAddr1() {
-		return userAddr1;
-	}
-	public void setUserAddr1(String userAddr1) {
-		this.userAddr1 = userAddr1;
-	}
-	public String getUserAddr2() {
-		return userAddr2;
-	}
-	public void setUserAddr2(String userAddr2) {
-		this.userAddr2 = userAddr2;
-	}
-	public String getUserAddr3() {
-		return userAddr3;
-	}
-	public void setUserAddr3(String userAddr3) {
-		this.userAddr3 = userAddr3;
-	}
-	public String getOrderPhone() {
-		return orderPhone;
-	}
-	public void setOrderPhone(String orderPhone) {
-		this.orderPhone = orderPhone;
-	}
+    // 注文情報に関するプロパティ
+    private String orderId; // 注文ID
+    private String userId; // ユーザーID
+    private String orderRec; // 受取人名
+    private String userAddr1; // 配送先住所1
+    private String userAddr2; // 配送先住所2
+    private String userAddr3; // 配送先住所3
+    private String orderPhone; // 受取人の電話番号
+    private int amount; // 注文総額
+    private Date orderDate; // 注文日時
+    private String delivery; // 配送ステータス
+
+    // 以下はプロパティにアクセスするためのgetterおよびsetterメソッド
+
+    public String getDelivery() { // 配送ステータスを取得
+        return delivery;
+    }
+    public void setDelivery(String delivery) { // 配送ステータスを設定
+        this.delivery = delivery;
+    }
+    public Date getOrderDate() { // 注文日時を取得
+        return orderDate;
+    }
+    public void setOrderDate(Date orderDate) { // 注文日時を設定
+        this.orderDate = orderDate;
+    }
+    public int getAmount() { // 注文総額を取得
+        return amount;
+    }
+    public void setAmount(int amount) { // 注文総額を設定
+        this.amount = amount;
+    }
+    public String getOrderId() { // 注文IDを取得
+        return orderId;
+    }
+    public void setOrderId(String orderId) { // 注文IDを設定
+        this.orderId = orderId;
+    }
+    public String getUserId() { // ユーザーIDを取得
+        return userId;
+    }
+    public void setUserId(String userId) { // ユーザーIDを設定
+        this.userId = userId;
+    }
+    public String getOrderRec() { // 受取人名を取得
+        return orderRec;
+    }
+    public void setOrderRec(String orderRec) { // 受取人名を設定
+        this.orderRec = orderRec;
+    }
+    public String getUserAddr1() { // 配送先住所1を取得
+        return userAddr1;
+    }
+    public void setUserAddr1(String userAddr1) { // 配送先住所1を設定
+        this.userAddr1 = userAddr1;
+    }
+    public String getUserAddr2() { // 配送先住所2を取得
+        return userAddr2;
+    }
+    public void setUserAddr2(String userAddr2) { // 配送先住所2を設定
+        this.userAddr2 = userAddr2;
+    }
+    public String getUserAddr3() { // 配送先住所3を取得
+        return userAddr3;
+    }
+    public void setUserAddr3(String userAddr3) { // 配送先住所3を設定
+        this.userAddr3 = userAddr3;
+    }
+    public String getOrderPhone() { // 受取人の電話番号を取得
+        return orderPhone;
+    }
+    public void setOrderPhone(String orderPhone) { // 受取人の電話番号を設定
+        this.orderPhone = orderPhone;
+    }
 }

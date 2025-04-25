@@ -13,15 +13,15 @@
 		<div class="vr"></div>
 	    </div>
 		<div class="col-md-9">
-<h1 class="my-5">장바구니</h1>		
+<h1 class="my-5">カート</h1>		
 <ul class="list-group list-group-flush">
 	<li class="list-group-item">
-	<!-- 모두선택 -->
+	<!-- すべて選択 -->
 		<div class="allCheck">
 			
 			<div class="d-flex">
 				<input type="checkbox" name="allCheck" id="allCheck" class="form-check"/>
-				<label for="allCheck" class="form-label mx-2">모두 선택</label>
+				<label for="allCheck" class="form-label mx-2">すべて選択</label>
 			</div>
 			
 			<div class="">
@@ -29,14 +29,14 @@
 				type="button" 
 				class="selectDelete_btn btn btn-outline-danger btn-lg"
 				>
-				선택삭제
+				選択削除
 				</button>
 			</div>
 		
 		</div>
 	</li>
 	
-	<!-- 변수선언 -->
+	<!-- 変数宣言 -->
 	<c:set var="sum" value="0"/>
 	<c:forEach items="${cartList}" var="cartList">
 	<li class="list-group-item">
@@ -53,10 +53,10 @@
 	<img src="${cartList.gdsThumbImg }"/>
 </div>
 <pre>
-상품명    ${cartList.gdsName}
-개당 가격 <fmt:formatNumber pattern="###,###,###" value="${cartList.gdsPrice}"/> 원
-구입 수량  ${cartList.cartStock} 개
-최종 가격 <fmt:formatNumber pattern="###,###,###" value="${cartList.gdsPrice * cartList.cartStock}"/> 원  
+商品名    ${cartList.gdsName}
+単価      <fmt:formatNumber pattern="###,###,###" value="${cartList.gdsPrice}"/> 円
+購入数量   ${cartList.cartStock} 個
+最終価格  <fmt:formatNumber pattern="###,###,###" value="${cartList.gdsPrice * cartList.cartStock}"/> 円  
 
 </pre>
 <div class="delete">
@@ -65,21 +65,21 @@ type="button"
 class="delete_${cartList.cartNum}_btn btn btn-outline-danger"
 data-cartNum="${cartList.cartNum}"
 >
-삭제
+削除
 </button>
 </div>
 </li>
-<!-- 반복할때 마다 sum에 상품가격(gdsPrice) * 상품갯수(cartStock)만큼을 더함 -->
+<!-- 繰り返すたびに sumに商品価格(gdsPrice) × 商品個数(cartStock)を加算 -->
 <c:set var="sum" value="${sum + (cartList.gdsPrice * cartList.cartStock) }"/>
 </c:forEach>
 
 <div class="my-3">
 	<div class="sum my-3">
-		총 합계 :&nbsp;<fmt:formatNumber pattern="###,###,###" value="${sum}"/>&nbsp;원	
+		合計 :&nbsp;<fmt:formatNumber pattern="###,###,###" value="${sum}"/>&nbsp;円	
 	</div>
 	<div class="orderOpen mt-3 mb-3">
 		<a href="#"	class="orderOpen_btn btn btn-outline-success">
-		주문 정보입력
+		注文情報入力
 		</a>
 	</div>
 </div>
@@ -89,7 +89,7 @@ data-cartNum="${cartList.cartNum}"
 <input type="hidden" name="amount" value="${sum}"/>
 
 <div class="input-group mb-3">
-	<label for="" class="form-label">수령인</label>
+	<label for="" class="form-label">受取人</label>
 	<input
 	type="text"
 	class="form-control"
@@ -98,7 +98,7 @@ data-cartNum="${cartList.cartNum}"
 </div>
 
 <div class="input-group mb-3">
-	<label for="" class="form-label">수령인 연락처</label>
+	<label for="" class="form-label">受取人連絡先</label>
 	<input
 	type="text"
 	class="form-control"
@@ -110,7 +110,7 @@ data-cartNum="${cartList.cartNum}"
 <div class="input-group">
 	<input type="text" id="" class="form-control">
 	<a href="#" onclick="sample_PostCode()" class="btn btn-outline-success">
-	우편번호 찾기
+	郵便番号検索
 	</a>
 </div>
 
@@ -134,8 +134,8 @@ data-cartNum="${cartList.cartNum}"
 	<div class="">
 	<div class="my-5 d-flex justify-content-end">
 	<div class="btn-group">
-	<input type="submit" class="order_btn btn btn-outline-success" value="주문"/>
-	<a ref="#" class="cancel_btn btn-outline-danger">취소</a>
+	<input type="submit" class="order_btn btn btn-outline-success" value="注文"/>
+	<a ref="#" class="cancel_btn btn-outline-danger">キャンセル</a>
 	</div>
 	</div>
 	</div>
@@ -144,15 +144,7 @@ data-cartNum="${cartList.cartNum}"
 
 </form>
 </div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+				
 </ul>
 
 

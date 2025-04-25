@@ -1,31 +1,39 @@
-$(document).on("click",".modify",function(){
-	//1) 서서히 나타나는 애니스타일 
-	$(".replyModal").fadeIn(200);
-	//2) 데이터 담아오기
-	var repNum = $(this).attr("data-repNum");
-	var repCon = $(this).parent().parent().children(".replyContent").text();
-	
-	$(".modal_repCon").val(repCon);
-	$(".modal_modify_btn").attr("data-repNum", repNum);
+$(document).on("click", ".modify", function(){
+    // 1) ゆっくり現れるアニメーションスタイル
+    $(".replyModal").fadeIn(200); // モーダルウィンドウをフェードインで表示
+
+    // 2) データを取得
+    var repNum = $(this).attr("data-repNum"); // data-repNum属性からコメント番号を取得
+    var repCon = $(this).parent().parent().children(".replyContent").text(); // コメント内容を取得
+    
+    $(".modal_repCon").val(repCon); // モーダル内のテキストエリアにコメント内容を設定
+    $(".modal_modify_btn").attr("data-repNum", repNum); // モーダルの修正ボタンにコメント番号を設定
 });
 
-//삭제
-$(document).on("click",".delete",function(){
-//사용자에게 삭제 여부를 확인
-var deleteConfirm = confirm("정말로 삭제하시겠습니까?");
-//만약 삭제를 한다면
-if(deleteConfirm){
-	var data = {repNum : $(this).attr("data-repNum")};
-	
-	//메모리 줄이고 렌더링하지 않게 ...
-	$.ajax({
-url:"/shop/view/deleteReply", type:"post", data:data, success : function(result){
-	if(result == 1) {//세션여부에 따라 다르다
-replyList();//본인인 경우만 삭제		
-	}else{
-alert("작성자 본인만 삭제 할수 있습니다")		
-	}
-},error : function(){alert("로그인을 하셔야 합니다")}		
-	});
-}
+// コメント削除
+$(document).on("click", ".delete", function(){
+    // ユーザーに削除するかどうかを確認
+    var deleteConfirm = confirm("本当に削除しますか？");
+
+    // 削除を実行する場合
+    if(deleteConfirm){
+        var data = {repNum: $(this).attr("data-repNum")}; // data-repNum属性からコメント番号を取得
+
+        // メモリを削減し、レンダリングを抑える...
+        $.ajax({
+            url: "/shop/view/deleteReply", // サーバーにリクエストを送るURL
+            type: "post", // POSTリクエストを使用
+            data: data, // サーバーに送信するデータ
+            success: function(result){
+                if(result == 1) { // セッションの有無によって異なる
+                    replyList(); // 自身のコメントだけ削除可能
+                } else {
+                    alert("投稿者本人のみ削除できます"); // 他のユーザーは削除不可
+                }
+            },
+            error: function(){ 
+                alert("ログインが必要です"); // ログインが必要な場合のエラーメッセージ
+            }        
+        });
+    }
 });
